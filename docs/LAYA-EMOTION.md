@@ -116,3 +116,10 @@ state_bus / brain / face / gate / gateway
   `laya_emotion/model/laya/multilingual/`
 - 代码优先读包内模型，找不到才回退 `convaiinnovations/laya` 在线下载；也可用 `LAYA_MODEL_DIR` 指定。
 - 本机离线加载实测：`LOAD_OK`，耗时 11.4s（CPU，HF_HUB_OFFLINE=1）。
+## 完整模型下载
+
+- Release：[v0.1.0-laya-model](https://github.com/guan153/dafeiyu-framework/releases/tag/v0.1.0-laya-model)
+- 文件：dafeiyu-laya-emotion-model-v0.1.zip（599,118,209 B / 约 571 MB）
+- 内容：model.safetensors（614MB）、	okenizer.json（32.8MB）、encoder/tokenizer 配置、motion_cls.pt（26KB）
+- SHA256：E3DFD5F84415716C72BDCD5B11FE4022D0A38AAE937AEE7BC95B8E2F6312231C
+- 仓库树不放 614MB 单文件（GitHub 100MB 限制），所以放 Release；桌面安装包内也有同款。
