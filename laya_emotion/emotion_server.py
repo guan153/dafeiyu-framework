@@ -4,11 +4,13 @@
 启动: python emotion_server.py --port 8901
 接口: POST /classify {"text": "..."} → {"label": "...", "confidence": 0.9, "probs": {...}}
 """
-import sys, json, argparse, threading
-import os
-sys.path.insert(0, os.environ.get("LAYA_HOME", r"%LAYA_HOME%"))
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import sys, json, argparse, threading, os
 from pathlib import Path
+_HERE = Path(__file__).resolve().parent
+for _p in (_HERE / "laya_pkg", os.environ.get("LAYA_HOME")):
+    if _p and Path(_p).is_dir():
+        sys.path.insert(0, str(_p))
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import torch
 import torch.nn as nn

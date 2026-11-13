@@ -1,13 +1,15 @@
 {
-  "name": "dafeiyu-emotion-loop",
-  "note": "emotion loop + laya classifier; encoder bundled in desktop package, not GitHub",
-  "generated": "2026-11-13 21:53:23",
+  "files": 83,
   "version": "0.1.0",
+  "ai_ready": true,
+  "note": "full model in Release; repo tree excludes 614MB encoder",
+  "generated": "2026-11-13 22:07:36",
+  "name": "dafeiyu-emotion-loop",
   "components": [
     "emotion_core",
     "gateway",
     "laya_emotion",
-    "framework"
-  ],
-  "files": 66
+    "framework",
+    "docs"
+  ]
 }

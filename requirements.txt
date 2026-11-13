@@ -1,0 +1,9 @@
+# laya 情感分类器 + 分类头运行依赖（Python 3.12）
+# CPU 机器建议先装 CPU 版 torch：
+#   pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0
+transformers==5.17.0
+tokenizers==0.23.2
+safetensors==0.8.0
+huggingface_hub==1.32.0
+numpy==2.4.6

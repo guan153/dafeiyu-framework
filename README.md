@@ -270,6 +270,13 @@
 - **便宜**：本地分类不花 API 钱；按需注入，输入成本可控。
 - **不装**：分类器只做输入，低置信回退；做不到就承认。
 
+## 安装包（AI-Ready）
+
+完整安装包：[v0.1.0-ai-ready](https://github.com/guan153/dafeiyu-framework/releases/tag/v0.1.0-ai-ready)  
+包含完整 laya encoder（614MB）、8 类分类头、laya Python 包源码、依赖清单、启动/自检脚本、配置模板、AI 配置说明。解压后先读 [AI-SETUP.md](AI-SETUP.md)。
+
+GitHub 仓库树不放 614MB 单文件；完整模型和完整安装包都在 Release 里。
+
 ## 快速开始
 
 ```powershell
