@@ -129,6 +129,7 @@ curl -X POST http://127.0.0.1:8901/classify -H "Content-Type: application/json" 
 ## 文档
 
 - [docs/DEEP-DIVE.md](docs/DEEP-DIVE.md) — **价格/Token/延迟/话术/情绪积累深度解析**
+- [docs/EMOTION-EDGE.md](docs/EMOTION-EDGE.md) — **情绪能力对比：消耗/延迟/话术/主动性/积累**
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — 组件、端口、数据流
 - [docs/EMOTION-LOOP.md](docs/EMOTION-LOOP.md) — **情绪闭环完整流程**（启动/每拍/回复/失败/回滚/验收）
 - [docs/LAYA-EMOTION.md](docs/LAYA-EMOTION.md) — laya 分类器改装细节
