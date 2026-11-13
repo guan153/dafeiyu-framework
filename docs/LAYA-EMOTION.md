@@ -108,3 +108,11 @@ state_bus / brain / face / gate / gateway
 - confidence 未做校准，只能当相对信号。
 - 强反讽/长上下文识别弱；必须和词表/上下文规则一起用。
 - CPU 单条推理毫秒级，但高并发要排队；生产需要加超时和熔断。
+## 模型包（可选）
+
+- **分类头**：`emotion_cls.pt`，26KB，仓库自带。
+- **laya encoder**：646.8MB（5 个文件，`model.safetensors` 约 614MB）。
+- GitHub 仓库不包含 encoder（单文件超 100MB）；桌面安装包 `大肥鱼-情绪框架-安装包-v0.1` 内已包含，路径：
+  `laya_emotion/model/laya/multilingual/`
+- 代码优先读包内模型，找不到才回退 `convaiinnovations/laya` 在线下载；也可用 `LAYA_MODEL_DIR` 指定。
+- 本机离线加载实测：`LOAD_OK`，耗时 11.4s（CPU，HF_HUB_OFFLINE=1）。

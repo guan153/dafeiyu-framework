@@ -19,3 +19,4 @@ logs/
 *.webp
 !assets/
 !assets/dafeiyu.png
+laya_emotion/model/

@@ -305,6 +305,8 @@ curl -X POST http://127.0.0.1:8901/classify -H "Content-Type: application/json" 
 
 详见 [docs/LAYA-EMOTION.md](docs/LAYA-EMOTION.md)。
 
+> **模型包说明**：GitHub 版只带 26KB 分类头；646.8MB 的 laya encoder 在桌面安装包里。代码会优先读包内 `laya_emotion/model/laya/multilingual/`，没有才回退到 Hugging Face 下载。
+
 ## 文档
 
 - [docs/INTRODUCTION.md](docs/INTRODUCTION.md) — **项目长文介绍（为什么做、怎么运转、情绪记忆、伏笔）**

@@ -14,14 +14,19 @@ import torch
 import torch.nn as nn
 import laya
 
-MODEL = Path(os.environ.get("EMOTION_CLS_MODEL", r"%MODEL_HOME%\emotion_cls.pt"))
+BASE_DIR = Path(__file__).resolve().parent
+MODEL = Path(os.environ.get("EMOTION_CLS_MODEL", str(BASE_DIR / "emotion_cls.pt")))
+LAYA_MODEL_DIR = Path(os.environ.get("LAYA_MODEL_DIR", str(BASE_DIR / "model" / "laya")))
 # 默认 CPU；--device cuda 可切回 GPU
 DEVICE = "cpu"
 _state = {"agent": None, "head": None, "embed": None, "label2id": None, "id2label": None}
 
 
 def load(device: str = "cpu"):
-    agent = laya.load("convaiinnovations/laya", subfolder="multilingual", device=device)
+    if LAYA_MODEL_DIR.is_dir():
+        agent = laya.load(str(LAYA_MODEL_DIR), subfolder="multilingual", device=device)
+    else:
+        agent = laya.load("convaiinnovations/laya", subfolder="multilingual", device=device)
     agent.model.eval()
     ckpt = torch.load(MODEL, map_location=DEVICE)
     label2id = ckpt["label2id"]
