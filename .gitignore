@@ -17,3 +17,5 @@ logs/
 *.png
 *.jpg
 *.webp
+!assets/
+!assets/dafeiyu.png

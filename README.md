@@ -2,6 +2,8 @@
 
 > 作者：guan153（GitHub）
 
+<p align="center"><img src="assets/dafeiyu.png" width="260" alt="大肥鱼"></p>
+
 > 从私有项目整理出的**预览版**：保留框架、情绪闭环内核、BEAM LLM 网关、一家三口看板/妈妈、开关工具。
 > **不包含 AstrBot 插件本体**，不包含账号、密钥、聊天数据库或私有数据。
 
