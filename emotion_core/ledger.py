@@ -44,7 +44,7 @@ CATEGORIES = ("bug", "gap", "conflict", "perf", "ux", "safety", "doc")
 CATEGORY_LABEL = {
     "bug": "缺陷",
     "gap": "能力缺口",
-    "conflict": "插件冲突",
+    "conflict": "模块冲突",
     "perf": "性能",
     "ux": "体验",
     "safety": "安全",
@@ -114,7 +114,7 @@ def _slug(text: str) -> str:
 
 
 def make_key(plugin: str, category: str, title: str) -> str:
-    """稳定的去重键：同一个插件、同一类问题的同义标题落到同一条。"""
+    """稳定的去重键：同一个模块、同一类问题的同义标题落到同一条。"""
     return f"{plugin or 'system'}:{category}:{_slug(title)}"
 
 

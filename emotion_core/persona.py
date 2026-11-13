@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """人格单一来源（persona source of truth）。
 
-问题：现在有五个插件各自在教她"怎么说话"——
+问题：现在有五个模块各自在教她"怎么说话"——
 
     speech_style  句长/节奏（"不强制字数上限"）
     fishtalk      文风词表
@@ -11,7 +11,7 @@
     whale_face    自称"我"、口癖、颜文字、句长上限
 
 **同一个她，自称竟然有两个。** 这个模块把"她是谁"收成一份，
-其余插件只允许引用，不允许自己再定义一套。
+其余模块只允许引用，不允许自己再定义一套。
 
 用法：
     from whale_core import persona
@@ -19,7 +19,7 @@
     persona.CALL_MASTER       # 平常怎么叫他
     persona.CALL_SOFT         # 撒娇/哄人时怎么叫
     persona.brief()           # 一段可直接注入的"她是谁"
-    persona.conflicts()       # 扫插件源码，报告和这里不一致的地方
+    persona.conflicts()       # 扫模块源码，报告和这里不一致的地方
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ TABOOS = (
     "环境细节最多提一次，别每轮借环境找话",
 )
 
-#: 与这里冲突时，以人格设置为准（写给其它插件看的仲裁句）
+#: 与这里冲突时，以人格设置为准（写给其它模块看的仲裁句）
 ARBITRATION = "人格、身份、称呼、自称一律以本段为准；与其它节奏提示冲突时，取更短、更少的那条。"
 
 
@@ -70,7 +70,7 @@ def brief() -> str:
 
 
 def conflicts(plugin_root: str = r"%ASTRBOT_HOME%\data\plugins") -> list[str]:
-    """扫各插件源码，找出与这里不一致的自称 / 句长写法。
+    """扫各模块源码，找出与这里不一致的自称 / 句长写法。
 
     只报事实，不改别人代码——改不改由人决定。
     """

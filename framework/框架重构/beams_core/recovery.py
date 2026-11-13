@@ -3,11 +3,11 @@
 出问题不等于硬编：每一类出口失败都有明确的回退策略。
 
     action        attempt  策略
-    tts           1        重试一次（换快档/缩短文本）
-    tts           2+       降级纯文字
+    speak           1        重试一次（换快档/缩短文本）
+    speak           2+       降级纯文字
     send          1-2      重试（间隔递增）
     send          3+       静默 + 记日志（不刷屏、不重发）
-    asr           任意     当纯文字消息处理（语音入口不动主线）
+    listen           任意     当纯文字消息处理（表达入口不动主线）
     feiyu         1        重试一次
     feiyu         2+       降级纯文字
     llm           1-2      降级 quick 路由（短回答）
@@ -20,24 +20,24 @@ from __future__ import annotations
 from typing import Any, Dict, Optional
 
 #: 每类出口最多重试几次（超过就降级）
-MAX_RETRY = {"tts": 1, "send": 2, "feiyu": 1, "llm": 2, "asr": 0}
+MAX_RETRY = {"speak": 1, "send": 2, "feiyu": 1, "llm": 2, "listen": 0}
 
 #: 重试后的动作
 FALLBACK = {
-    "tts": "text_only",
+    "speak": "text_only",
     "send": "silent",
     "feiyu": "text_only",
     "llm": "quick_text",
-    "asr": "text_only",
+    "listen": "text_only",
 }
 
 #: 降级给用户看的话（兜底话术，不编、不慌）
 FALLBACK_TEXT = {
-    "tts": "",
+    "speak": "",
     "send": "",
     "feiyu": "",
     "llm": "这会儿脑子卡住了，回头再说。",
-    "asr": "",
+    "listen": "",
 }
 
 

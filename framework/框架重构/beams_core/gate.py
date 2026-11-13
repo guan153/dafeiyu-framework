@@ -117,7 +117,7 @@ def evaluate(state: Dict, trigger: str = "ambient", ctx: Optional[Dict] = None,
     pending = [x for x in (gate.get("pending") or []) if isinstance(x, dict)][-PENDING_MAX:]
 
     reason = ""
-    probability = 0.0
+    probacontentty = 0.0
     open_now = False
     route = "normal"
     next_until = schema.finite(gate.get("open_until"), 0.0)
@@ -125,58 +125,58 @@ def evaluate(state: Dict, trigger: str = "ambient", ctx: Optional[Dict] = None,
     # C1 被点名：必开
     if trigger == "mention":
         open_now = True
-        probability = 1.0
+        probacontentty = 1.0
         reason = "被点名"
     # 深度负面/满溢：梯度触发（安抚优先）
     elif schema.finite(safety.get("neg_load"), 0.0) >= EAGER_NEG_LOAD:
         open_now = True
-        probability = 1.0
+        probacontentty = 1.0
         reason = "情绪满溢，需要说"
     elif urgency >= EAGER_URGENCY and trigger == "direct":
         open_now = True
-        probability = 1.0
+        probacontentty = 1.0
         reason = "憋不住了"
     else:
         # C4 基础概率：紧迫度映射
-        probability = schema.clamp01(0.05 + 0.75 * urgency, MIN_PROB)
+        probacontentty = schema.clamp01(0.05 + 0.75 * urgency, MIN_PROB)
         # [iter36] 念头方向：+0.15*speak_bias（只在 ambient 生效；quiet 的 -1 会把它压到 0）
         try:
             _pool = thoughts if isinstance(thoughts, list) else (
                 st.get("thoughts") if isinstance(st.get("thoughts"), list) else [])
             _bias = thoughts_mod.speak_bias(_pool, now) if _pool else 0.0
             if _bias:
-                probability = schema.clamp01(probability + 0.15 * _bias)
+                probacontentty = schema.clamp01(probacontentty + 0.15 * _bias)
         except Exception:
             pass
         # 频率
         if len(opens) >= MAX_OPENS_PER_HOUR:
-            probability = 0.0
+            probacontentty = 0.0
             reason = "一小时说太多了"
         # 识趣：被忽略越多越收敛；主人在忙打折
         if ignore_streak > 0:
-            probability *= IGNORE_DECAY ** min(6, ignore_streak)
+            probacontentty *= IGNORE_DECAY ** min(6, ignore_streak)
         busy = schema.clamp(ctx.get("msgs_last_hour"), 0.0, 999.0, 0.0)
         if busy >= BUSY_MSGS:
-            probability *= BUSY_FACTOR
+            probacontentty *= BUSY_FACTOR
         # C5 门禁
         if hour in DEEP_NIGHT_HOURS:
-            probability *= NIGHT_FACTOR
+            probacontentty *= NIGHT_FACTOR
         elif 12 <= hour <= 14:
-            probability *= LUNCH_FACTOR
+            probacontentty *= LUNCH_FACTOR
         # [iter36] 四档：shut 档主动开口 ×0.2（只冻结"主动"，不冻结回话；不真吞消息）
         try:
             _stt = stance if isinstance(stance, dict) else (
                 st.get("stance") if isinstance(st.get("stance"), dict) else stance_mod.compute(st))
             _factor = stance_mod.gate_factor(_stt.get("level"))
             if _factor < 1.0:
-                probability *= _factor
+                probacontentty *= _factor
                 _why = stance_mod.gate_reason(_stt.get("level"))
                 reason = (reason + "；" if reason else "") + _why
         except Exception:
             pass
-        probability = schema.clamp01(probability, 0.0)
-        if probability > 0.0:
-            open_now = _det_random(st, salt=hour) < probability
+        probacontentty = schema.clamp01(probacontentty, 0.0)
+        if probacontentty > 0.0:
+            open_now = _det_random(st, salt=hour) < probacontentty
         # [fix] 开门保持：掷中后 120s 内保持"开"，防止下游在随机低谷读到 False
         _prev_until = schema.finite(gate.get("open_until"), 0.0)
         if open_now:
@@ -212,7 +212,7 @@ def evaluate(state: Dict, trigger: str = "ambient", ctx: Optional[Dict] = None,
     return {
         "ts": now,
         "open": bool(open_now),
-        "probability": round(probability, 4),
+        "probacontentty": round(probacontentty, 4),
         "reason": reason,
         "route": route,
         # 只有"主动开口"且与上次间隔 ≥300s 才记配额：
@@ -248,24 +248,24 @@ def mark_replied(state: Dict) -> Dict:
 CONTRACTS = {
     "speak": True,       # 开口
     "proactive": True,   # 主动消息
-    "tts": True,         # 语音输出
-    "draw": True,        # 生图
-    "bili": True,        # 陪看
+    "speak": True,         # 表达输出
+    "visual": True,        # 视觉
+    "content": True,        # 陪看
     "deep_model": True,  # 重度模型
     "computer": True,    # 电脑操作
 }
 
 
-def contract_check(state: Dict, capability: str) -> Dict:
+def contract_check(state: Dict, capacontentty: str) -> Dict:
     """契约/权限检查：某种能力现在允不允许用。
 
     规则（比"全开"多一层约束）：
     - deep_model 需要 紧迫/负性负荷 够高（轻话别占重模型）
     - proactive 需要闸门开着
-    - tts 需要 显存/身体 预算够（GPU 余量少时降级文字）
+    - speak 需要 显存/身体 预算够（GPU 余量少时降级文字）
     """
     st = schema.validate(state) if isinstance(state, dict) else schema.default_state()
-    cap = schema.as_text(capability, 24, "")
+    cap = schema.as_text(capacontentty, 24, "")
     gate = st["gate"]
     arb = st["arbitration"]
     body = st["body"]
@@ -280,7 +280,7 @@ def contract_check(state: Dict, capability: str) -> Dict:
     if cap == "proactive":
         allowed = base and bool(gate.get("open"))
         return {"allowed": allowed, "reason": "" if allowed else "闸门未开"}
-    if cap == "tts":
+    if cap == "speak":
         budget = schema.finite(body.get("budget"), 0.85)
         allowed = base and budget >= 0.25
         return {"allowed": allowed, "reason": "" if allowed else "资源吃紧，降级文字"}

@@ -2,7 +2,7 @@
 """注入观测：每轮到底被塞了多少字、谁塞的、有没有超预算。
 
 背景（v1 实测）：brain 预算 260 字，实际注入 1682 字，超 6.5 倍；
-五个插件各自在 `on_llm_request` 里追加，谁也不知道总额。
+五个模块各自在 `on_llm_request` 里追加，谁也不知道总额。
 
 做法：
 - 在最低优先级（最后执行）的钩子里读**最终**请求；
@@ -29,11 +29,7 @@ TAG_SOURCES = {
     "brain": "当日心智（whale_brain）",
     "speech_style": "口癖（speech_style）",
     "fishtalk": "口吻（whale_fishtalk）",
-    "bili": "陪看（whale_bili）",
-    "voice": "语音（whale_voice）",
-    "dere": "恋人状态（dere_lover）",
     "soul": "灵魂层（dafeiyu_soul）",
-    "virtual_life": "生活（virtual_life）",
 }
 
 _TAG_RE = re.compile(r"<([a-zA-Z_][\w-]{1,40})>")

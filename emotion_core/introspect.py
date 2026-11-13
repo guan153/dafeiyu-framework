@@ -49,9 +49,9 @@ KNOWN_ARCH_DEBTS: list[dict[str, str]] = [
         "symptom": "她说「不记得」或重复记同一件事",
     },
     {
-        "title": "主动消息：第三方插件仍可绕过统一队列直发",
+        "title": "主动消息：第三方模块仍可绕过统一队列直发",
         "category": "conflict", "severity": "P2", "plugin": "astrbot_plugin_proactive_chat",
-        "root_cause": "v3 内核已有申请-仲裁-发放队列，但社区插件不经过它",
+        "root_cause": "v3 内核已有申请-仲裁-发放队列，但社区模块不经过它",
         "symptom": "深夜打扰、同一时段多条、发失败没人知道",
     },
     {
@@ -120,7 +120,7 @@ class SelfModel:
         """把架构级不足写进账本（幂等：已存在就完全不动，连次数都不加）。
 
         注意：不能用 record() 直接写——它遇到已存在会 +1 次，
-        而两个插件启动时都会调用 seed，会凭空把架构债次数刷成 2。
+        而两个模块启动时都会调用 seed，会凭空把架构债次数刷成 2。
         """
         added = 0
         for item in KNOWN_ARCH_DEBTS:
@@ -473,11 +473,11 @@ def _plan_for(category: str, severity: str, title: str) -> tuple[str, str, str]:
         return (
             "1) 确认该能力的唯一提供者；2) 其余提供者降为 standby 或停用；3) 加一致性探针，冲突再现即报警。",
             "medium",
-            "恢复各插件原配置并重启对应插件；账本状态改回 open。",
+            "恢复各模块原配置并重启对应模块；账本状态改回 open。",
         )
     if category == "gap":
         return (
-            "1) 评估三种路径：自研 / 接社区插件 / 明确不做；2) 若不做，写清理由并标 wontfix；3) 若做，先出最小可用验证。",
+            "1) 评估三种路径：自研 / 接社区模块 / 明确不做；2) 若不做，写清理由并标 wontfix；3) 若做，先出最小可用验证。",
             "low",
             "删掉提案并把弱点状态改回 triage，不影响运行。",
         )

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """目录与路径约定：整个 v3 只在这里认路。
 
-以前各插件各写死 `%ASTRBOT_HOME%\\data`，换机器/换盘就集体失灵；
+以前各模块各写死 `%ASTRBOT_HOME%\\data`，换机器/换盘就集体失灵；
 现在统一走 ASTRBOT_ROOT，环境变量优先，缺失才回退默认值。
 """
 
@@ -27,7 +27,7 @@ def data_dir() -> Path:
 
 
 def plugin_data_dir(plugin_name: str | None = None) -> Path:
-    """插件数据目录；不传则返回父目录。"""
+    """模块数据目录；不传则返回父目录。"""
     base = data_dir() / "plugin_data"
     return base / plugin_name if plugin_name else base
 
@@ -57,7 +57,7 @@ def runtime_log() -> Path:
 
 
 def config_json() -> Path:
-    """内核配置（与 AstrBot 插件配置分开，便于 AstrBot 不在时也能读）。"""
+    """内核配置（与 AstrBot 模块配置分开，便于 AstrBot 不在时也能读）。"""
     return core_dir() / "core_config.json"
 
 

@@ -64,7 +64,7 @@ OUT_COOLDOWN_MIN = 90.0             # 主动消息冷却：45 -> 90 分钟
 OUT_DAILY_CAP = 3                   # 主动消息每日上限：4 -> 3 条
 OUT_SOUND_COOLDOWN_MIN = 180.0      # 上一条是"听到…"，下一条至少隔 3 小时
 SOUND_WORDS = ("听到", "听见", "耳边", "声音", "音乐", "旋律", "叮", "吱", "歌")
-OUT_QUIET_HOURS = (23.5, 8.0)      # 静音时段 23:30-08:00：安静，不主动发（和其他插件口径一致）
+OUT_QUIET_HOURS = (23.5, 8.0)      # 静音时段 23:30-08:00：安静，不主动发（和其他模块口径一致）
 _aud_lock = threading.Lock()
 
 Path(STATE).parent.mkdir(parents=True, exist_ok=True)
@@ -214,7 +214,7 @@ def block(messages):
         fatigue = float(s.get("fatigue") or 0)
         label = str(s.get("label") or "")
         outlet = str(s.get("outlet") or "")
-        # [emotion-snapshot 20261113] 插件侧快照是唯一事实源，这里跟随，避免一轮两个心情
+        # [emotion-snapshot 20261113] 模块侧快照是唯一事实源，这里跟随，避免一轮两个心情
         try:
             _sp = Path(r"%ASTRBOT_HOME%\data\plugin_data\whale_core\emotion_snapshot.json")
             if _sp.is_file():

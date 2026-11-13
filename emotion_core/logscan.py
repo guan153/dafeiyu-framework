@@ -16,7 +16,7 @@ from typing import Any
 
 from . import paths
 
-# (key, 标题, 分类, 严重度, 归属插件猜测, 正则)
+# (key, 标题, 分类, 严重度, 归属模块猜测, 正则)
 PATTERNS: list[tuple[str, str, str, str, str, str]] = [
     ("send_api_unavailable", "OneBot 通道不可用，消息发不出去", "bug", "P1", "",
      r"ApiNotAvailable|Failed to send|发送失败"),
@@ -28,18 +28,12 @@ PATTERNS: list[tuple[str, str, str, str, str, str]] = [
      r"batch size is invalid|batch size is invalid, should not be larger than"),
     ("faiss_desync", "FAISS 索引与 SQLite 不同步", "bug", "P2", "astrbot_plugin_iris_chat_memory",
      r"FAISS 索引与 SQLite 脱同步|缺失向量"),
-    ("image_tag_missing", "该配图却没输出 image 标签", "bug", "P2", "astrbot_plugin_dafeiyu_soul",
-     r"只发文字|没给出 image"),
-    ("invalid_cover", "B 站封面 URL 非法", "bug", "P3", "astrbot_plugin_whale_bili",
-     r"封面图加载失败.*not a valid url"),
-    ("comfy_timeout", "ComfyUI 读取超时", "perf", "P3", "astrbot_plugin_whale_paint",
-     r"ComfyUI read timeout|ComfyUI.*timeout"),
     ("event_loop_lag", "事件循环卡顿（可能阻塞 AstrBot）", "perf", "P1", "",
      r"Event loop lag detected.*?(\d+(?:\.\d+)?)s"),
     ("provider_missing", "Provider 未就绪（启动竞态）", "bug", "P3", "",
      r"Provider .* was not found|Embedding Provider 未就绪"),
-    ("plugin_load_fail", "插件加载失败", "bug", "P1", "",
-     r"Failed to load plugin|插件加载失败|Load plugin .* failed"),
+    ("plugin_load_fail", "模块加载失败", "bug", "P1", "",
+     r"Failed to load plugin|模块加载失败|Load plugin .* failed"),
     ("asgi_endofstream", "ASGI 连接被客户端中断", "doc", "P3", "",
      r"EndOfStream|No response returned"),
     ("send_lock_bypass", "绕过了发送闸门（疑似抢发）", "conflict", "P2", "",

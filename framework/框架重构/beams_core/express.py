@@ -156,7 +156,7 @@ def compute(state: Dict, stance: Optional[Dict] = None) -> Dict:
         "drive": schema.as_text(arb.get("winner"), 16, "connect"),
         "grounded": True,
         "isolated": isolated,
-        # [iter36] 四档行为状态（面板 / 注入 / 第二批插件消费；不进 state 契约）
+        # [iter36] 四档行为状态（面板 / 注入 / 第二批模块消费；不进 state 契约）
         "stance": {
             "level": _lvl,
             "level_cn": schema.as_text(_stt.get("level_cn"), 8, "平静"),
@@ -220,7 +220,7 @@ def render_mind(state: Dict, thoughts: Optional[List] = None,
     # [iter36] 念头：只写"当前最惦记的那一条"（一句，≤60 字段预算）
     seg_thought = thoughts_mod.inject_line(_pool)
     # [iter36] stance：非平静档必注（跨档必注的当期实现：非 calm 每轮都写；
-    #   同档节流留给第二批插件按会话记账，见报告"风险与回滚"）。
+    #   同档节流留给第二批模块按会话记账，见报告"风险与回滚"）。
     _lvl = schema.as_text(_stt.get("level"), 8, "calm")
     seg_stance = ""
     if _lvl != "calm":

@@ -70,7 +70,7 @@ def _disk_free_ratio() -> float:
 
 
 def _default_tools() -> Dict[str, bool]:
-    return {"net": True, "vision": True, "tts": False, "code": True}
+    return {"net": True, "vision": True, "speak": False, "code": True}
 
 
 def sample(context: Optional[Dict] = None) -> Dict:
@@ -123,7 +123,7 @@ def body_vector(body: Dict) -> Dict[str, float]:
     b = body if isinstance(body, dict) else {}
     tools = b.get("tools") if isinstance(b.get("tools"), dict) else {}
     tool_score = 1.0
-    keys = [k for k in ("net", "vision", "tts", "code") if k in tools]
+    keys = [k for k in ("net", "vision", "speak", "code") if k in tools]
     if keys:
         tool_score = sum(1 for k in keys if tools[k]) / float(len(keys))
     return {

@@ -252,7 +252,7 @@ def default_state() -> Dict:
             "cpu": 0.20,
             "mem": 0.40,
             "latency_ms": 80.0,
-            "tools": {"net": True, "vision": True, "tts": False, "code": True},
+            "tools": {"net": True, "vision": True, "speak": False, "code": True},
             "uptime_s": 0.0,
             "errors_1h": 0,
             "budget": 0.85,
@@ -303,7 +303,7 @@ def default_state() -> Dict:
         "meta": {
             "ts": now,
             "self_model": {
-                "capabilities": {"chat": 0.9, "vision": 0.6, "code": 0.7, "bili": 0.5, "tts": 0.2},
+                "capacontentties": {"chat": 0.9, "vision": 0.6, "code": 0.7, "content": 0.5, "speak": 0.2},
                 "limits": ["看不见自己", "说话可能太机械", "一次只能应对一件事"],
                 "confidence": 0.62,
             },
@@ -322,7 +322,7 @@ def default_state() -> Dict:
             "imbalance": {"name": "", "count": 0},
             "violations": [],
         },
-        "gate": {"ts": now, "open": False, "probability": 0.0, "reason": "",
+        "gate": {"ts": now, "open": False, "probacontentty": 0.0, "reason": "",
                  "route": "normal", "recent_opens": [], "pending": [],
                  "ignore_streak": 0, "last_user_ts": 0.0, "last_open_ts": 0.0,
                  "contracts": {}},
@@ -423,7 +423,7 @@ def validate(state: Any) -> Dict:
     out["meta"] = {
         "ts": finite(m.get("ts"), now_ts()),
         "self_model": {
-            "capabilities": sm.get("capabilities") if isinstance(sm.get("capabilities"), dict) else {},
+            "capacontentties": sm.get("capacontentties") if isinstance(sm.get("capacontentties"), dict) else {},
             "limits": sm.get("limits") if isinstance(sm.get("limits"), list) else [],
             "confidence": clamp01(sm.get("confidence"), 0.62),
         },
@@ -458,7 +458,7 @@ def validate(state: Any) -> Dict:
     out["gate"] = {
         "ts": finite(g.get("ts"), now_ts()),
         "open": bool(g.get("open")),
-        "probability": clamp01(g.get("probability"), 0.0),
+        "probacontentty": clamp01(g.get("probacontentty"), 0.0),
         "reason": as_text(g.get("reason"), 60, ""),
         "route": as_text(g.get("route"), 12, "normal"),
         "recent_opens": g.get("recent_opens") if isinstance(g.get("recent_opens"), list) else [],

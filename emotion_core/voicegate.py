@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""语音/主动消息闸门（voice_gate）只读适配。
+"""开口闸门（expression gate）只读适配。
 
-背景：`whale_voice` 早就在写一个统一闸门 `voice_gate.json`，
-`proactive_chat` 读它决定「这一轮到底允不允许主动开口」。
+背景：上层主动性模块早就在写一个统一闸门 `voice_gate.json`，
+主动性调度读它决定「这一轮到底允不允许主动开口」。
 如果 v3 的出站队列另造一套策略，就会变成**两套闸门**，比没有更糟。
 
 所以这里的原则是：
@@ -58,7 +58,7 @@ def consequence_paths(data_dir: Path) -> list[Path]:
 
 
 def owner_session(data_dir: Path | None) -> str:
-    """读 voice 插件配置里的 owner_session：只有绑定会话才受闸门约束。"""
+    """读 voice 模块配置里的 owner_session：只有绑定会话才受闸门约束。"""
     if not data_dir:
         return ""
     cfg = data_dir.parent.parent / "config" / "astrbot_plugin_whale_voice_config.json"

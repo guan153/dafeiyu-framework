@@ -6,7 +6,7 @@
     结果就是「她有心情，但你看不见」：选图只看「这句话」，不看「她」。
 
 本模块只干一件事：把 ``(mood, intensity, scene)`` 翻译成一张 :class:`FaceCard`。
-**一张表**（:data:`MOOD_FACE`）管全部，禁止在插件里再散落「委屈就发 sad」这种硬编码。
+**一张表**（:data:`MOOD_FACE`）管全部，禁止在模块里再散落「委屈就发 sad」这种硬编码。
 
 硬约束
 ------
@@ -101,7 +101,7 @@ class FaceSpec:
     cute: int = 0             # 撒娇档 0..3
     meme_tag: str = "daily"   # 表情包检索 tag
     meme_boost: float = 1.0   # 表情包权重倍数
-    allow_image: bool = True  # 是否允许发图（脸/表情包/生图）
+    allow_image: bool = True  # 是否允许配图
     max_messages: int = 2     # 一轮最多几条消息（情绪高时可以多）
 
     def to_dict(self) -> dict:
@@ -173,7 +173,7 @@ _UNKNOWN = "平静"
 # ── 产物：一张「脸」 ────────────────────────────────────────────────────────
 @dataclass(frozen=True)
 class FaceCard:
-    """翻译结果。所有呈现层（Live2D / 表情包 / 生图 / 发送节奏）都只读它。"""
+    """翻译结果。所有呈现层（表情/语气/发送节奏）都只读它。"""
 
     mood: str
     intensity: float

@@ -288,7 +288,7 @@ class MemoryHub:
                 ledger.record(
                     "五套记忆各自注入，没有统一召回入口",
                     category="conflict", severity="P2",
-                    root_cause="每层都由自己的插件在 on_llm_request 里插一段，预算与去重各自为政",
+                    root_cause="每层都由自己的模块在 on_llm_request 里插一段，预算与去重各自为政",
                     symptom="同一轮可能同时注入档案/摘要/原话/向量召回，互相挤占且可能矛盾",
                     evidence={"providers": [p["name"] for p in facts], "total_records": census["total_records"]},
                     source="memory_census", key=key,

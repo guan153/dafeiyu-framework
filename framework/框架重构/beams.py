@@ -262,7 +262,7 @@ def default_state() -> Dict:
     return {
         "version": VERSION, "ts": now, "tick_count": 0,
         "body": {"ts": now, "cpu": 0.20, "mem": 0.40, "latency_ms": 80.0,
-                 "tools": {"net": True, "vision": True, "tts": False, "code": True},
+                 "tools": {"net": True, "vision": True, "speak": False, "code": True},
                  "uptime_s": 0.0, "errors_1h": 0, "budget": 0.85, "load": 0.30},
         "intero": {"ts": now, "valence": INTERO_BASELINE["valence"],
                    "arousal": INTERO_BASELINE["arousal"], "dominance": INTERO_BASELINE["dominance"],
@@ -282,8 +282,8 @@ def default_state() -> Dict:
                         "candidates": {}, "streak_name": "", "streak_count": 0,
                         "last_switch_ts": now, "history": []},
         "meta": {"ts": now,
-                 "self_model": {"capabilities": {"chat": 0.9, "vision": 0.6, "code": 0.7,
-                                                "bili": 0.5, "tts": 0.2},
+                 "self_model": {"capacontentties": {"chat": 0.9, "vision": 0.6, "code": 0.7,
+                                                "content": 0.5, "speak": 0.2},
                                 "limits": ["看不见自己", "说话可能太机械", "一次只能应对一件事"],
                                 "confidence": 0.62},
                  "audit": {"last_ts": 0.0, "last_verdict": "none", "pending_review": False,
@@ -293,7 +293,7 @@ def default_state() -> Dict:
         "safety": {"neg_load": 0.0, "isolation": False,
                    "imbalance": {"name": "", "count": 0}, "violations": [],
                    "warnings": []},
-        "gate": {"ts": now, "open": False, "probability": 0.0, "reason": "",
+        "gate": {"ts": now, "open": False, "probacontentty": 0.0, "reason": "",
                  "route": "normal", "recent_opens": [], "pending": [],
                  "ignore_streak": 0, "last_user_ts": 0.0, "last_open_ts": 0.0},
         "health": {"ts": now, "consecutive_failures": 0, "safe_mode": False,
@@ -364,7 +364,7 @@ def validate(state) -> Dict:
     sm = m.get("self_model") or {}
     au = m.get("audit") or {}
     out["meta"] = {"ts": finite(m.get("ts"), now_ts()),
-                   "self_model": {"capabilities": sm.get("capabilities") if isinstance(sm.get("capabilities"), dict) else {},
+                   "self_model": {"capacontentties": sm.get("capacontentties") if isinstance(sm.get("capacontentties"), dict) else {},
                                   "limits": sm.get("limits") if isinstance(sm.get("limits"), list) else [],
                                   "confidence": clamp01(sm.get("confidence"), 0.62)},
                    "audit": {"last_ts": max(0.0, finite(au.get("last_ts"), 0.0)),
@@ -385,7 +385,7 @@ def validate(state) -> Dict:
                      "warnings": sf.get("warnings") if isinstance(sf.get("warnings"), list) else []}
     g = out.get("gate") if isinstance(out.get("gate"), dict) else {}
     out["gate"] = {"ts": finite(g.get("ts"), now_ts()), "open": bool(g.get("open")),
-                   "probability": clamp01(g.get("probability"), 0.0),
+                   "probacontentty": clamp01(g.get("probacontentty"), 0.0),
                    "reason": as_text(g.get("reason"), 60, ""),
                    "route": as_text(g.get("route"), 12, "normal"),
                    "recent_opens": g.get("recent_opens") if isinstance(g.get("recent_opens"), list) else [],
@@ -469,7 +469,7 @@ def sample_body(context=None) -> Dict:
     latency = clamp(ctx.get("latency_ms"), 1.0, 60000.0, 80.0)
     errors = int(clamp(ctx.get("errors_1h"), 0, 10000, 0))
     tools = ctx.get("tools") if isinstance(ctx.get("tools"), dict) else \
-        {"net": True, "vision": True, "tts": False, "code": True}
+        {"net": True, "vision": True, "speak": False, "code": True}
     load = clamp01(0.45 * cpu + 0.30 * mem + 0.25 * _norm_latency(latency))
     disk = clamp01(ctx.get("disk_free"), 0.5)
     budget = clamp01(ctx.get("budget", 0.92 - 0.35 * load - 0.12 * (1.0 - disk) - min(0.25, errors * 0.02)), 0.85)
@@ -488,7 +488,7 @@ def step_intero(prev, body, dt_s=5.0, ctx=None) -> Dict:
     err = clamp01(finite(body.get("errors_1h", 0)) / 20.0, 0.0)
     pe = clamp01(ctx.get("prediction_error"), err)
     tools = body.get("tools") if isinstance(body.get("tools"), dict) else {}
-    keys = [k for k in ("net", "vision", "tts", "code") if k in tools]
+    keys = [k for k in ("net", "vision", "speak", "code") if k in tools]
     tool_score = (sum(1 for k in keys if tools[k]) / float(len(keys))) if keys else 1.0
     action_cost = clamp01(0.25 + 0.45 * bv_load + 0.35 * (1.0 - resource) + 0.25 * err, 0.25)
     tgt = {
@@ -816,7 +816,7 @@ VERDICT_ADJUST = {"too_cold": {"warmth_bias": +0.06},
 
 def update_self_model(prev, outcome) -> Dict:
     sm = prev if isinstance(prev, dict) else {}
-    caps = dict(sm.get("capabilities") or {})
+    caps = dict(sm.get("capacontentties") or {})
     conf = clamp01(sm.get("confidence"), 0.62)
     limits = list(sm.get("limits") or [])
     kind = as_text(outcome.get("kind"), 24, "chat")
@@ -826,7 +826,7 @@ def update_self_model(prev, outcome) -> Dict:
     note = as_text(outcome.get("note"), 80, "")
     if not ok and note and note not in limits and len(limits) < 6:
         limits.append(note)
-    return {"capabilities": {k: round(clamp01(v), 3) for k, v in caps.items()},
+    return {"capacontentties": {k: round(clamp01(v), 3) for k, v in caps.items()},
             "limits": limits[:6], "confidence": round(conf, 3)}
 
 
@@ -1385,7 +1385,7 @@ def gate_evaluate(state, trigger="ambient", ctx=None, ev=None):
         pending = []
     if open_now:
         route = "deep" if (urgency >= 0.75 or neg >= 0.6) else ("normal" if urgency >= 0.45 else "quick")
-    return {"ts": now, "open": bool(open_now), "probability": round(prob, 4), "reason": reason,
+    return {"ts": now, "open": bool(open_now), "probacontentty": round(prob, 4), "reason": reason,
             "route": route,
             "recent_opens": (_record_opens(opens, now, open_now, trigger))[-GATE_MAX_OPENS_H:],
             "pending": pending, "ignore_streak": ignore,
@@ -1686,7 +1686,7 @@ class Kernel:
         st["tick_count"] = int(finite(st.get("tick_count"), 0)) + 1
         # [iter36] 长期人格漂移：每 TRAIT_EVAL_EVERY 轮评估一次（进度存 _traits.json，重启不丢）
         try:
-            cur_round = int(self._turns or 0)  # 用内核自己的 chat 计数（与插件轮数解耦）
+            cur_round = int(self._turns or 0)  # 用内核自己的 chat 计数（与模块轮数解耦）
             base_round = int(self._traits_eval_round or 0)
             if cur_round > base_round and (cur_round - base_round) >= TRAIT_EVAL_EVERY:
                 res = _traits_evaluate(self.traits, self._trait_signals,

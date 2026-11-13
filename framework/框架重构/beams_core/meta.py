@@ -48,7 +48,7 @@ def _similar(a: str, b: str) -> float:
 def update_self_model(prev: Any, outcome: Dict) -> Dict:
     """按行为结果更新自我模型（成功涨置信，失败降置信；有上下界）。"""
     sm = prev if isinstance(prev, dict) else {}
-    caps = sm.get("capabilities") if isinstance(sm.get("capabilities"), dict) else {}
+    caps = sm.get("capacontentties") if isinstance(sm.get("capacontentties"), dict) else {}
     conf = schema.clamp01(sm.get("confidence"), 0.62)
     limits = sm.get("limits") if isinstance(sm.get("limits"), list) else []
 
@@ -62,7 +62,7 @@ def update_self_model(prev: Any, outcome: Dict) -> Dict:
     if not ok and note and note not in limits and len(limits) < 6:
         limits.append(note)
 
-    return {"capabilities": {k: round(schema.clamp01(v), 3) for k, v in caps.items()},
+    return {"capacontentties": {k: round(schema.clamp01(v), 3) for k, v in caps.items()},
             "limits": limits[:6],
             "confidence": round(conf, 3)}
 

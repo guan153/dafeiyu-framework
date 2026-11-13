@@ -313,7 +313,7 @@ class OutboundQueue:
                         "source": row["source"],
                     }
                 # 超时/未知结果不能重试：消息可能已经送达，重放 = 发两遍。
-                # （这条来自头部陪伴插件的踩坑记录：平台 timeout/unknown 绝不自动重放）
+                # （这条来自头部陪伴模块的踩坑记录：平台 timeout/unknown 绝不自动重放）
                 if _is_ambiguous(error):
                     self._finish(row["id"], "unknown", error, attempts=attempts)
                     self._stats["unknown"] = self._stats.get("unknown", 0) + 1

@@ -148,7 +148,7 @@ class BeamsKernel:
     def _note_comfort(self, kind: str, now: float) -> None:
         """[iter36] 真哄/假哄进度：comfort_streak = 连续真哄轮数；假哄清零。
 
-        口径同 fish_heart：真哄要连续够轮数才算哄回来（第二批插件按档位消费），
+        口径同 fish_heart：真哄要连续够轮数才算哄回来（第二批模块按档位消费），
         假哄（一边哄一边"行了别闹"）直接作废进度——但压力小升由既有 appraisal 完成，
         本函数只记数，不改任何动力学。
         """
@@ -318,12 +318,12 @@ class BeamsKernel:
             pass
         return out
 
-    def contract(self, capability: str) -> Dict:
-        """契约/权限检查（供出口与插件使用）。"""
-        return gate_mod.contract_check(self.state, capability)
+    def contract(self, capacontentty: str) -> Dict:
+        """契约/权限检查（供出口与模块使用）。"""
+        return gate_mod.contract_check(self.state, capacontentty)
 
     def failure(self, action: str, err: str = "", attempt: int = 1) -> Dict:
-        """出口失败 → 回退决策（tts/send/feiyu/llm/asr）。"""
+        """出口失败 → 回退决策（speak/send/feiyu/llm/listen）。"""
         decision = recovery.failure_retry(action, err, attempt)
         try:
             self.bus.publish("failure", {"action": action, "err": str(err)[:80],
@@ -649,7 +649,7 @@ class BeamsKernel:
         st["health"] = health
         # [iter27] 长期人格漂移：每 EVAL_EVERY 轮评估一次（进度存 traits.json，state.meta 会被重建丢掉）
         try:
-            cur_round = int(self._turns or 0)  # 用内核自己的 chat 计数（与插件轮数解耦）
+            cur_round = int(self._turns or 0)  # 用内核自己的 chat 计数（与模块轮数解耦）
             base_round = int(self._traits_eval_round or 0)
             if cur_round > base_round and (cur_round - base_round) >= traits_mod.EVAL_EVERY:
                 res = traits_mod.evaluate(self.traits, self._trait_signals,
@@ -728,7 +728,7 @@ class BeamsKernel:
             "safe_mode": bool(st["health"].get("safe_mode")),
             # [iter27] 长期人格（面板/日志用）
             "traits": traits_mod.view(self.traits),
-            # [iter36] 行为层（面板/日志/第二批插件用；不进 state 契约）
+            # [iter36] 行为层（面板/日志/第二批模块用；不进 state 契约）
             "stance": dict(self.stance or {}),
             "thoughts": thoughts_mod.summary(self.thoughts),
             "comfort_streak": int(schema.clamp((self.comfort or {}).get("streak"), 0, 999, 0)),
@@ -741,11 +741,11 @@ class BeamsKernel:
     def render_lite(self) -> str:
         return express.render_lite(self.state, thoughts=self.thoughts, stance=self.stance)
 
-    # ------------------------------------------------------------ [iter36] 行为层接口（第二批插件用）
+    # ------------------------------------------------------------ [iter36] 行为层接口（第二批模块用）
 
     @property
     def comfort_streak(self) -> int:
-        """连续真哄轮数（fake_comfort 清零）。第二批插件按档位消费，本轮不接插件。"""
+        """连续真哄轮数（fake_comfort 清零）。第二批模块按档位消费，本轮不接模块。"""
         return int(schema.clamp((self.comfort or {}).get("streak"), 0, 999, 0))
 
     def thoughts_summary(self) -> Dict:
@@ -843,7 +843,7 @@ class BeamsKernel:
         """对外契约快照（写 beams_snapshot.json）。
 
         字段刻意兼容旧 outlet.json 的常用键（outlet/urgency），
-        让旧插件将来能"一行改动"读新内核，而不是重写。
+        让旧模块将来能"一行改动"读新内核，而不是重写。
         """
         st = schema.validate(self.state)
         exp = express.compute(st)
@@ -870,16 +870,16 @@ class BeamsKernel:
             "isolation": bool(st["safety"].get("isolation")),
             "neg_load": round(schema.finite(st["safety"].get("neg_load"), 0.0), 3),
             "gate_open": bool(st["gate"].get("open")),
-            "gate_probability": round(schema.finite(st["gate"].get("probability"), 0.0), 3),
+            "gate_probacontentty": round(schema.finite(st["gate"].get("probacontentty"), 0.0), 3),
             "gate_reason": schema.as_text(st["gate"].get("reason"), 60, ""),
             "route": schema.as_text(st["gate"].get("route"), 12, "normal"),
             "pending_mentions": len(st["gate"].get("pending") or []),
             "hard_floor": dict(safety_mod.HARD_FLOOR),
-            # [iter27] 长期人格快照（供面板/其他插件读）
+            # [iter27] 长期人格快照（供面板/其他模块读）
             "traits": traits_mod.view(self.traits),
             "traits_summary": traits_mod.summary(self.traits),
             "traits_last": self._traits_last or {},
-            # [iter36] 行为层快照（面板/第二批插件用；state 契约不变）
+            # [iter36] 行为层快照（面板/第二批模块用；state 契约不变）
             "stance": stance_mod.summary(self.stance),
             "thoughts": thoughts_mod.summary(self.thoughts),
             "comfort_streak": int(schema.clamp((self.comfort or {}).get("streak"), 0, 999, 0)),
