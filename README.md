@@ -4,6 +4,22 @@
 
 <p align="center"><img src="assets/dafeiyu.png" width="260" alt="大肥鱼"></p>
 
+## 项目介绍
+
+如果只看目录，这是一套"情绪状态机 + 分类器 + 网关"的工程拼装。  
+但我们真正想做的，不是让模型在对话里"演"出一个有情绪的人，而是给一个长期存在的角色，建一本**可查、可改、可回滚的情绪账本**。
+
+常见的陪伴式对话，情绪是"当轮"的：这一句让她黏人，下一句让她平静，昨天发生的事进不了今天的心情。  
+时间一长，角色会变得"每次都像刚认识你"——不是模型不聪明，是情绪没有事实源。
+
+这份仓库把情绪拆成三层：**事实层**（一份只允许一个写者写的快照）、**表达层**（状态/表情/语气/动作读同一份事实）、**控制层**（开关/闸门/配额/回滚）。  
+先有一份可审计的情绪事实，再让表达层去读它——这是它和"角色扮演提示词"最根本的区别。
+
+她还会有**情绪记忆**：高显著度的事件不只被记成"聊天记录"，而是带效价的记忆；下次想起，会重新拉动 valence，而不是复读当时的话。  
+这一版先把账本做对；下一版，再把情绪曲线写进长期记忆（文末有伏笔）。
+
+> 完整长文：[docs/INTRODUCTION.md](docs/INTRODUCTION.md)  
+> 数字与对比：[docs/DEEP-DIVE.md](docs/DEEP-DIVE.md)、[docs/EMOTION-EDGE.md](docs/EMOTION-EDGE.md)
 一个把"情绪"从多源各说各话，收成**唯一事实源**，再稳定注入表达层的工程框架。  
 包含：情绪内核、BEAM LLM 网关、laya 情感分类器改装、状态快照与回滚开关。  
 不包含上层聊天运行时、完整基座模型权重或任何私有数据。
@@ -128,6 +144,7 @@ curl -X POST http://127.0.0.1:8901/classify -H "Content-Type: application/json" 
 
 ## 文档
 
+- [docs/INTRODUCTION.md](docs/INTRODUCTION.md) — **项目长文介绍（为什么做、怎么运转、情绪记忆、伏笔）**
 - [docs/DEEP-DIVE.md](docs/DEEP-DIVE.md) — **价格/Token/延迟/话术/情绪积累深度解析**
 - [docs/EMOTION-EDGE.md](docs/EMOTION-EDGE.md) — **情绪能力对比：消耗/延迟/话术/主动性/积累**
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — 组件、端口、数据流
