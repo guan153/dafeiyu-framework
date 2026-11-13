@@ -65,6 +65,32 @@
 
 更完整的对比见 [docs/WHY-OURS.md](docs/WHY-OURS.md)。
 
+## 数字速览（实测/估算）
+
+| 指标 | 数值 | 说明 |
+|---|---|---|
+| laya 分类延迟 | p50 90ms / p90 116ms | CPU，10 次实测 |
+| 网关短请求 | 1.0–1.2s | 219 prompt / 16 completion |
+| 真实一轮 | 12–28s | 20:57:57 入站 → 20:58:15 首条回复 |
+| 网关固定开销 | 219 tokens/请求 | 系统底色块 |
+| 5,640 汉字 | 3,568 tokens | 约 0.63 token/汉字 |
+| 7,524 字注入 | 约 4,700 tokens | 按比例估算 |
+| 情绪快照 | 681–692 B | 每 60s 写一次 |
+| 单条回复成本 | 约 ¥0.006–0.013 | 4,700 输入 + 300 输出，峰/谷不同 |
+| 1,000 条回复 | 约 ¥6–13 | 缓存命中更低 |
+
+> 价格按 DeepSeek 官方单价估算（deepseek-flash，2026-11）；峰时北京时间 09–12 / 14–18，谷时减半。  
+> 完整公式、Token 构成、延迟拆解、话术指标、情绪积累模型见 **[docs/DEEP-DIVE.md](docs/DEEP-DIVE.md)**。
+
+## 我们到底强在哪（一句话版）
+
+- **一致**：一份情绪事实，所有读方和网关读同一份，不会一轮三个心情。
+- **可回滚**：每个读方一个 JSON 开关，5 秒热读，不用改代码。
+- **可审计**：快照、影子日志、闸门 JSON、网关 requests/injected 都能查。
+- **有层次**：底色/温度/表达/扰动，不是单一标签。
+- **便宜**：本地分类不花 API 钱；按需注入，输入成本可控。
+- **不装**：分类器只做输入，低置信回退；做不到就承认。
+
 ## 快速开始
 
 ```powershell
@@ -102,6 +128,7 @@ curl -X POST http://127.0.0.1:8901/classify -H "Content-Type: application/json" 
 
 ## 文档
 
+- [docs/DEEP-DIVE.md](docs/DEEP-DIVE.md) — **价格/Token/延迟/话术/情绪积累深度解析**
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — 组件、端口、数据流
 - [docs/EMOTION-LOOP.md](docs/EMOTION-LOOP.md) — **情绪闭环完整流程**（启动/每拍/回复/失败/回滚/验收）
 - [docs/LAYA-EMOTION.md](docs/LAYA-EMOTION.md) — laya 分类器改装细节
