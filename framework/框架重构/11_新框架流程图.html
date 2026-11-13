@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>BEAM-AI 新框架 · 一条消息/一段声音如何走完情绪闭环</title>
+<style>
+  :root{
+    --bg:#f6f2ea; --ink:#2b2b2b; --muted:#7a7368; --line:#8a8278;
+    --c-entry:#dbeafe; --c-entry-b:#5b8def;
+    --c-input:#e8e3fb; --c-input-b:#8b6fe0;
+    --c-core:#dcf3e8; --c-core-b:#2f9e6e;
+    --c-gen:#fdf1d6; --c-gen-b:#d99a2b;
+    --c-out:#fbe4e4; --c-out-b:#d15656;
+    --c-contract:#e9edf2; --c-contract-b:#6b7a8f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#e9e4da;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--ink)}
+  .page{width:2200px;margin:0 auto;padding:28px 0 40px}
+  .title{font-size:30px;font-weight:800;letter-spacing:.5px;margin:0 0 6px 60px}
+  .sub{font-size:15px;color:var(--muted);margin:0 0 18px 60px}
+  svg{display:block;margin:0 auto;background:var(--bg);border-radius:18px;box-shadow:0 6px 30px rgba(0,0,0,.12)}
+  .card-title{font-size:15px;font-weight:700}
+  .card-num{font-size:11px;font-weight:700;fill:#fff}
+  .card-path{font-size:10.5px;fill:#6b6459;font-family:Consolas,monospace}
+  .card-role{font-size:10.5px;fill:#3f3b34}
+  .band-label{font-size:13px;font-weight:700;fill:#6b6459}
+  .link-label{font-size:10.5px;fill:#5f584e}
+  .legend{font-size:12px;fill:#5f584e}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="title">BEAM-AI 新框架 · 一条消息 / 一段声音如何走完情绪闭环</div>
+  <div class="sub">大框架 = 情绪地基（六层，始终在线）· 小框架 = 语音四模型 + 旧 19 插件互补 · 实线=主链路 · 虚线=记忆/反馈 · 红虚线=门控/否决</div>
+  <svg id="d" width="2080" height="1460" viewBox="0 0 2080 1460"></svg>
+</div>
+<script>
+const SVGNS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("d");
+function el(tag, attrs, parent){
+  const e = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+
+// ── 阶段带 ──
+const bands = [
+  {y:40,  h:190, title:"① 入口链路",           fill:"#fbfaf6"},
+  {y:250, h:190, title:"② 输入小框架（语音四模型之三）", fill:"#fbfaf6"},
+  {y:460, h:300, title:"③ BEAM-AI 大框架（始终在线 · 五秒一拍 · 情绪地基）", fill:"#fbfaf6"},
+  {y:780, h:190, title:"④ 生成与表达",          fill:"#fbfaf6"},
+  {y:990, h:190, title:"⑤ 输出与运维",          fill:"#fbfaf6"},
+  {y:1200,h:220, title:"⑥ 契约 / 记忆 / 测试材料", fill:"#fbfaf6"}
+];
+
+// ── 模块卡片 ──
+const nodes = [
+  {id:"qq",      band:0, x:60,  y:96,  w:230, h:104, num:"A1", color:"entry", title:"主人 QQ 消息", path:"platform_message_history", role:"私聊 / 群聊 · 文字消息"},
+  {id:"voice",   band:0, x:330, y:96,  w:230, h:104, num:"A2", color:"entry", title:"语音 / 麦克风", path:"wav", role:"一句人声 · 实时录入"},
+  {id:"onebot",  band:0, x:600, y:96,  w:230, h:104, num:"A3", color:"entry", title:"NapCat · OneBot v11", path:":3000 / :3001", role:"QQ ↔ WS 桥"},
+  {id:"astrbot", band:0, x:870, y:96,  w:230, h:104, num:"A4", color:"entry", title:"AstrBot 入口", path:":6185", role:"消息事件分发 · 鉴权"},
+
+  {id:"vp",      band:1, x:60,  y:306, w:230, h:104, num:"B1", color:"input", title:"声纹 · CAM++", path:"owner_voiceprint.json", role:"阈值 0.6 · 是不是主人", tag:"门控"},
+  {id:"asr",     band:1, x:330, y:306, w:230, h:104, num:"B2", color:"input", title:"ASR · FunASR", path:"POST :8913/asr", role:"语音 → 文字 · 0.4-0.9s"},
+  {id:"laya",    band:1, x:600, y:306, w:230, h:104, num:"B3", color:"input", title:"laya 情绪分类", path:"POST :8901/classify", role:"8 类 · 0.06s · 实时"},
+  {id:"qwenemo", band:1, x:870, y:306, w:230, h:104, num:"B4", color:"input", title:"QwenEmo 校准", path:"qwen0.6bemo4-merge", role:"本地权重 · 0.96 · 离线补强"},
+
+  {id:"state",   band:2, x:60,  y:520, w:200, h:104, num:"C0", color:"core", title:"beams_state.json", path:"每 5s 一拍", role:"情绪不归零 · 单写者"},
+  {id:"l0",      band:2, x:290, y:520, w:230, h:104, num:"C1", color:"core", title:"L0 身体 / 环境", path:"body.py", role:"算力·显存·延迟·服务健康"},
+  {id:"l1",      band:2, x:550, y:520, w:230, h:104, num:"C2", color:"core", title:"L1 内感受 · 效价", path:"intero.py", role:"资源/负载/误差 → 连续效价"},
+  {id:"l2",      band:2, x:810, y:520, w:230, h:104, num:"C3", color:"core", title:"L2 双速情绪", path:"affect2.py", role:"快 appraisal + 慢 mood/stress", tag:"核心"},
+  {id:"l3",      band:2, x:1070,y:520, w:230, h:104, num:"C4", color:"core", title:"L3 动机仲裁", path:"drive.py", role:"五动机 → 唯一 winner", tag:"单点决策"},
+  {id:"l4",      band:2, x:1330,y:520, w:230, h:104, num:"C5", color:"core", title:"L4 元认知 · 叙事", path:"meta.py", role:"自我模型·审核·防复读"},
+  {id:"l5",      band:2, x:1590,y:520, w:230, h:104, num:"C6", color:"core", title:"L5 表达门控", path:"express.py", role:"话多话少·温度·语音向量"},
+  {id:"bus",     band:2, x:1850,y:520, w:180, h:104, num:"C7", color:"core", title:"双向总线", path:"bus.py", role:"上行状态/下行调参"},
+
+  {id:"inner",   band:3, x:60,  y:836, w:250, h:104, num:"D1", color:"gen", title:"<inner> 注入", path:"91 字 · 慢通道/压力", role:"只写旧系统没有的"},
+  {id:"llm",     band:3, x:340, y:836, w:250, h:104, num:"D2", color:"gen", title:"DeepSeek API", path:"LLM 生成", role:"人设 + 记忆 + 门控参数"},
+  {id:"reply",   band:3, x:620, y:836, w:250, h:104, num:"D3", color:"gen", title:"回复文本", path:"reply_chunker", role:"分句 · 反八股"},
+  {id:"meme",    band:3, x:900, y:836, w:250, h:104, num:"D4", color:"gen", title:"表情包", path:"dafeiyu_meme", role:"22~60% 概率 · 贴题"},
+
+  {id:"feiyu",   band:4, x:60,  y:1046,w:250, h:104, num:"E1", color:"out", title:"feiyu_client", path:"reply_voice()", role:"情绪向量 · 一行接入"},
+  {id:"tts",     band:4, x:340, y:1046,w:250, h:104, num:"E2", color:"out", title:"IndexTTS", path:"POST :8912/speak", role:"缓存 235 · 去AI化 · 双声线", tag:"GPU"},
+  {id:"voiceout",band:4, x:620, y:1046,w:250, h:104, num:"E3", color:"out", title:"语音输出", path:"wav → QQ record", role:"分段流式发送"},
+  {id:"qqout",   band:4, x:900, y:1046,w:250, h:104, num:"E4", color:"out", title:"QQ 发送", path:"OneBot send_private_msg", role:"文字 / 表情 / 语音"},
+  {id:"wd",      band:4, x:1180,y:1046,w:250, h:104, num:"E5", color:"out", title:"语音看门狗", path:"watch_voice_stack.ps1", role:"120s 巡检 · 自动重启"},
+
+  {id:"snapshot",band:5, x:60,  y:1256,w:230, h:104, num:"F1", color:"contract", title:"beams_snapshot.json", path:"每拍刷新", role:"outlet/urgency 对外契约"},
+  {id:"shadow",  band:5, x:330, y:1256,w:230, h:104, num:"F2", color:"contract", title:"outlet_shadow.json", path:"旧 outlet 格式", role:"S3 接管接缝"},
+  {id:"plugins", band:5, x:600, y:1256,w:250, h:104, num:"F3", color:"contract", title:"旧 19 插件", path:"astrbot_plugin_*", role:"人设/记忆/陪看/生图/场景"},
+  {id:"obs",     band:5, x:890, y:1256,w:230, h:104, num:"F4", color:"contract", title:"obs / audit", path:"jsonl 流水", role:"观测 · 下行调参审计"},
+  {id:"db",      band:5, x:1160,y:1256,w:250, h:104, num:"F5", color:"contract", title:"data_v4.db", path:"platform_message_history", role:"973 条真实聊天记录"}
+];
+// ── 连接线（手动路径，照片式）──
+const links = [
+  // 入口链
+  {pts:[[290,148],[600,148]], label:"消息事件", color:"#5b8def"},
+  {pts:[[830,148],[870,148]], label:"", color:"#5b8def"},
+  {pts:[[445,200],[445,306]], label:"wav", color:"#5b8def", emphasis:true},
+  // 输入链
+  {pts:[[290,358],[330,358]], label:"先验声纹", color:"#d15656", dashed:true},
+  {pts:[[560,358],[600,358]], label:"文本", color:"#5b8def", emphasis:true},
+  {pts:[[985,358],[830,358]], label:"校准矩阵", color:"#8b6fe0", dashed:true},
+  // 输入 → L2（情绪进入内核）
+  {pts:[[985,200],[985,470],[1040,470],[1040,520]], label:"文本事件", color:"#5b8def", emphasis:true},
+  {pts:[[715,410],[715,470],[925,470],[925,520]], label:"语音情绪", color:"#5b8def", emphasis:true},
+  // 六层主链（横向）
+  {pts:[[520,572],[550,572]], label:"", color:"#2f9e6e"},
+  {pts:[[780,572],[810,572]], label:"", color:"#2f9e6e"},
+  {pts:[[1040,572],[1070,572]], label:"情绪→动机", color:"#2f9e6e"},
+  {pts:[[1300,572],[1330,572]], label:"冲动→审核", color:"#2f9e6e"},
+  {pts:[[1560,572],[1590,572]], label:"审核→表达", color:"#2f9e6e"},
+  {pts:[[1820,572],[1850,572]], label:"", color:"#2f9e6e"},
+  // state ↔ 总线
+  {pts:[[160,520],[160,500],[1985,500],[1985,520]], label:"持久化", color:"#6b7a8f", dashed:true},
+  // L5 → 注入（门控参数，跨带长折线）
+  {pts:[[1705,624],[1705,770],[185,770],[185,836]], label:"门控参数", color:"#2f9e6e", emphasis:true},
+  // 生成链
+  {pts:[[310,888],[340,888]], label:"注入 +91 字", color:"#d99a2b"},
+  {pts:[[590,888],[620,888]], label:"生成", color:"#d99a2b"},
+  {pts:[[870,888],[900,888]], label:"出站加工", color:"#d99a2b"},
+  // 表达链
+  {pts:[[310,1098],[340,1098]], label:"/speak", color:"#d15656"},
+  {pts:[[590,1098],[620,1098]], label:"wav", color:"#d15656", emphasis:true},
+  {pts:[[870,1098],[900,1098]], label:"", color:"#d15656"},
+  // 情绪向量 → 语音（虚线，跨带）
+  {pts:[[1705,624],[1705,990],[185,990],[185,1046]], label:"8 维情绪向量", color:"#8b6fe0", dashed:true},
+  // 回复 → feiyu（语音开关）
+  {pts:[[745,940],[745,990],[745,1046]], label:"语音开关", color:"#8b6fe0", dashed:true},
+  // 表情包 → QQ 发送
+  {pts:[[1025,940],[1025,1046]], label:"", color:"#d99a2b"},
+  // 回复 → L4（反馈，跨带）
+  {pts:[[870,940],[870,960],[1320,960],[1320,624]], label:"反馈 → 审核", color:"#8b6fe0", dashed:true},
+  // 契约链
+  {pts:[[160,624],[160,700],[175,700],[175,1256]], label:"对外契约", color:"#6b7a8f", dashed:true},
+  {pts:[[290,1308],[330,1308]], label:"映射", color:"#6b7a8f"},
+  {pts:[[560,1308],[600,1308]], label:"S3 接管", color:"#6b7a8f", dashed:true},
+  // 回放测试
+  {pts:[[1285,1256],[1285,1180],[925,1180],[925,624]], label:"973 条回放", color:"#8b6fe0", dashed:true}
+];
+
+function nodeBox(id){ return nodes.find(n=>n.id===id); }
+function drawArrowDefs(){
+  const defs = el("defs", {});
+  for (const [id,color] of [["ar-ink","#5f584e"],["ar-blue","#5b8def"],["ar-green","#2f9e6e"],["ar-red","#d15656"],["ar-purple","#8b6fe0"],["ar-gray","#6b7a8f"],["ar-amber","#d99a2b"]]) {
+    const m = el("marker", {id, viewBox:"0 0 10 10", refX:"9", refY:"5", markerWidth:"7", markerHeight:"7", orient:"auto-start-reverse"}, defs);
+    el("path", {d:"M 0 0 L 10 5 L 0 10 z", fill:color}, m);
+  }
+}
+const ARROW = {"#5b8def":"ar-blue","#2f9e6e":"ar-green","#d15656":"ar-red","#8b6fe0":"ar-purple","#6b7a8f":"ar-gray","#d99a2b":"ar-amber","#5f584e":"ar-ink"};
+
+function draw(){
+  drawArrowDefs();
+  // 阶段带
+  bands.forEach((b,i)=>{
+    el("rect",{x:30,y:b.y,width:2020,height:b.h,rx:16,fill:b.fill,stroke:"#d8d0c2","stroke-width":1.2,"stroke-dasharray":"6 5"});
+    el("text",{x:48,y:b.y+22,class:"band-label"},null).textContent = b.title;
+  });
+  // 连线（先画线，后画卡片）
+  links.forEach(l=>{
+    const d = l.pts.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ");
+    el("path",{d, fill:"none", stroke:l.color, "stroke-width":l.emphasis?2.4:1.7,
+               "stroke-dasharray":l.dashed?"6 5":null, "marker-end":"url(#"+ARROW[l.color]+")",
+               "stroke-linejoin":"round", "stroke-linecap":"round", opacity:.95});
+    if(l.label){
+      const mid = l.pts[Math.floor(l.pts.length/2)];
+      el("text",{x:mid[0]+6, y:mid[1]-6, class:"link-label"},null).textContent = l.label;
+    }
+  });
+  // 卡片
+  nodes.forEach(n=>{
+    const pal = {"entry":["--c-entry","--c-entry-b"],"input":["--c-input","--c-input-b"],
+                 "core":["--c-core","--c-core-b"],"gen":["--c-gen","--c-gen-b"],
+                 "out":["--c-out","--c-out-b"],"contract":["--c-contract","--c-contract-b"]}[n.color];
+    const fill = getComputedStyle(document.documentElement).getPropertyValue(pal[0]).trim();
+    const border = getComputedStyle(document.documentElement).getPropertyValue(pal[1]).trim();
+    el("rect",{x:n.x,y:n.y,width:n.w,height:n.h,rx:12,fill:"#fff",stroke:border,"stroke-width":1.4,filter:"url(#soft)"});
+    el("rect",{x:n.x,y:n.y,width:n.w,height:6,rx:3,fill:border});
+    // 编号徽章
+    el("rect",{x:n.x+10,y:n.y+14,width:46,height:18,rx:9,fill:border});
+    const num = el("text",{x:n.x+33,y:n.y+27,"text-anchor":"middle",class:"card-num"},null);
+    num.textContent = n.num;
+    if(n.tag){
+      el("rect",{x:n.x+n.w-56,y:n.y+14,width:46,height:18,rx:9,fill:"#fff4d6",stroke:"#d99a2b"});
+      const tg = el("text",{x:n.x+n.w-33,y:n.y+27,"text-anchor":"middle","font-size":"10.5",fill:"#a97500"},null);
+      tg.textContent = n.tag;
+    }
+    const t = el("text",{x:n.x+14,y:n.y+52,class:"card-title"},null); t.textContent = n.title;
+    const p = el("text",{x:n.x+14,y:n.y+74,class:"card-path"},null); p.textContent = n.path;
+    const r = el("text",{x:n.x+14,y:n.y+94,class:"card-role"},null); r.textContent = n.role;
+  });
+  // 图例
+  const ly = 1428;
+  el("text",{x:48,y:ly,class:"legend"},null).textContent = "图例：";
+  const items = [["#5b8def","实线 = 主链路"],["#8b6fe0","紫虚线 = 情绪/反馈（双向）"],["#d15656","红虚线 = 门控/否决"],["#6b7a8f","灰虚线 = 契约/持久化"]];
+  items.forEach((it,i)=>{
+    const x = 130 + i*300;
+    el("line",{x1:x,y1:ly-4,x2:x+36,y2:ly-4,stroke:it[0],"stroke-width":2.2,"stroke-dasharray":i? "6 5":null});
+    el("text",{x:x+44,y:ly,class:"legend"},null).textContent = it[1];
+  });
+}
+draw();
+</script>
+</body>
+</html>

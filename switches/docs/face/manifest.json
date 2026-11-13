@@ -1,0 +1,98 @@
+{
+ "开心": {
+  "file": "00_开心.png",
+  "expr": "happy, open mouth, sparkling eyes, blush, fang, smile, warm light",
+  "exp3": "爱心眼",
+  "seed": 20261108,
+  "comfy_file": "anm_00043_.png",
+  "ts": 1794120927
+ },
+ "黏人": {
+  "file": "01_黏人.png",
+  "expr": "clinging, leaning forward, blush, half-closed eyes, soft smile, close-up",
+  "exp3": "脸红",
+  "seed": 20261109,
+  "comfy_file": "anm_00044_.png",
+  "ts": 1794120973
+ },
+ "吃醋": {
+  "file": "02_吃醋.png",
+  "expr": "pout, jealous, narrowed eyes, annoyed, looking away, blush",
+  "exp3": "黑脸",
+  "seed": 20261110,
+  "comfy_file": "anm_00045_.png",
+  "ts": 1794121016
+ },
+ "委屈": {
+  "file": "03_委屈.png",
+  "expr": "crying, tears, >_<, pout, wet eyes, trembling",
+  "exp3": "＞＜",
+  "seed": 20261111,
+  "comfy_file": "anm_00046_.png",
+  "ts": 1794121062
+ },
+ "困": {
+  "file": "04_困.png",
+  "expr": "sleepy, half-closed eyes, yawning, sweatdrop, tired",
+  "exp3": "圈圈眼",
+  "seed": 20261112,
+  "comfy_file": "anm_00047_.png",
+  "ts": 1794121109
+ },
+ "兴奋": {
+  "file": "05_兴奋.png",
+  "expr": "excited, open mouth, sparkling eyes, fang, blush, dynamic angle",
+  "exp3": "兔牙",
+  "seed": 20261113,
+  "comfy_file": "anm_00048_.png",
+  "ts": 1794121155
+ },
+ "胡闹": {
+  "file": "06_胡闹.png",
+  "expr": "mischievous, smug, one eye closed, tongue out, grin, fang",
+  "exp3": "屑屑眼",
+  "seed": 20261114,
+  "comfy_file": "anm_00049_.png",
+  "ts": 1794121201
+ },
+ "好奇": {
+  "file": "07_好奇.png",
+  "expr": "curious, head tilt, wide eyes, leaning forward, mouth slightly open",
+  "exp3": "前倾",
+  "seed": 20261115,
+  "comfy_file": "anm_00050_.png",
+  "ts": 1794121247
+ },
+ "安心": {
+  "file": "08_安心.png",
+  "expr": "gentle smile, closed eyes, calm, soft blush, relaxed",
+  "exp3": "",
+  "seed": 20261116,
+  "comfy_file": "anm_00051_.png",
+  "ts": 1794121293
+ },
+ "认真": {
+  "file": "09_认真.png",
+  "expr": "serious, black-framed glasses, focused, closed mouth, straight face",
+  "exp3": "黑框眼镜",
+  "seed": 20261117,
+  "comfy_file": "anm_00052_.png",
+  "ts": 1794121339
+ },
+ "平静": {
+  "file": "10_平静.png",
+  "expr": "neutral expression, calm, slight smile, looking at viewer",
+  "exp3": "",
+  "seed": 20261118,
+  "comfy_file": "anm_00053_.png",
+  "ts": 1794121386
+ },
+ "低落": {
+  "file": "11_低落.png",
+  "expr": "sad, crying, tears streaming, looking down, drooping eyes",
+  "exp3": "流泪",
+  "seed": 20261119,
+  "comfy_file": "anm_00054_.png",
+  "ts": 1794121432
+ }
+}

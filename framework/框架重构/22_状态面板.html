@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>BEAM-AI 状态面板</title><style>
+body{background:#f6f2ea;font-family:"Microsoft YaHei",Arial,sans-serif;color:#2b2b2b;margin:0;padding:28px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#7a7368;font-size:13px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border:1px solid #ddd5c6;border-radius:12px;padding:16px}
+.card h3{margin:0 0 10px;font-size:15px;color:#5f584e}
+.kv{font-size:13px;line-height:1.9}
+.big{font-size:22px;font-weight:800}
+.ok{color:#2f9e6e}.warn{color:#d99a2b}.bad{color:#d15656}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td{padding:4px 6px;border-bottom:1px solid #efe9dd}
+.spark{font-family:Consolas,monospace;font-size:18px;letter-spacing:2px;color:#5b8def}
+.quiet{font-size:13px;line-height:1.9;color:#4a443c}
+</style></head><body><div class="wrap">
+<h1>BEAM-AI 造人系统 · 状态面板</h1>
+<div class="sub">2026-11-03 21:26:56 · 内核心跳 2.9s 前✅</div>
+<div class="grid">
+<div class="card"><h3>情绪</h3>
+<div class="big">平静 <span class="kv">效价 +0.01 / 唤醒 0.48</span></div>
+<div class="kv">慢通道：心情 +0.01 · 压力 0.22 · 疲劳 0.00</div>
+<div class="kv">联结（亲密度）：100/100（真实 0.92；已越过旧刻度上限）</div>
+<div class="kv">负性负荷 0.12 </div></div>
+<div class="card"><h3>动机与闸门</h3>
+<div class="big">connect <span class="kv">紧迫 0.52</span></div>
+<div class="kv">闸门：✅开 · 概率 0.44 · route normal</div>
+<div class="kv">原因： · 未响应 0 条</div></div>
+<div class="card"><h3>语音四模型</h3>
+<table><tr><td>ASR 8913</td><td>❌ 掉线</td></tr><tr><td>laya 8901</td><td>✅ ready</td></tr><tr><td>IndexTTS 8912</td><td>❌ 掉线</td></tr></table>
+<div class="kv">IndexTTS 缓存 None 条 · 显存余 None MB</div></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>她为什么安静</h3>
+<div class="quiet">① 总开关✅(live) → ② 冷却✅(19:30) → ③ 日限✅(0/6) → ④ 睡眠✅(21点) → ⑤ 回避⚠️(冷落惩罚0.56) → ⑥ 概率⛔[想说程度不够]：想说程度 1.20 还没过 0.16，再等等；内核其实允许她开口(0.44)</div>
+<div class="quiet">状态变化：平静 → 平静（未变；第 13661 拍，距上次采样 12 拍）</div>
+</div>
+<div class="card" style="margin-top:16px"><h3>情绪轨迹（最近 24 个采样）</h3>
+<div class="kv">心情 <span class="spark">█▇▇▆▆▆▅▅▄▄▃▃▃▃▃▃▃▃▃▂▂▁▁▁</span></div>
+<div class="kv">压力 <span class="spark">███▅▅▅▅▅▅▅▅▅▅▃▃▃▃▃▃▃▃▃▁▁</span></div>
+<div class="kv">话多 <span class="spark">▅▅▅▄▄▃▃▃▂▂▁▁▁▁█▆▅▅▄▃▂▁▁▁</span></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>接管状态</h3>
+<div class="kv">whale_drive（画画/动态）→ outlet_shadow · proactive_chat（主动消息）→ shadow+gate+urgency≥0.55 · dafeiyu_meme（表情包）→ beams_snapshot</div>
+<div class="kv">对外契约：outlet=connect · urgency=0.52 · gate_open=True · route=normal</div>
+</div>
+</div></body></html>

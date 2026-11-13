@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>BEAM-AI 新框架全流程图（模仿小叶子）</title>
+<style>
+  :root{--bg:#f7f4ee;--ink:#2b2b2b;}
+  *{box-sizing:border-box}
+  body{margin:0;background:#eae5db;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--ink)}
+  .page{width:2480px;margin:0 auto;padding:24px 0 36px}
+  .title{font-size:29px;font-weight:800;margin:0 0 6px 55px}
+  .sub{font-size:14.5px;color:#7a7368;margin:0 0 14px 55px}
+  svg{display:block;margin:0 auto;background:var(--bg);border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,.12)}
+  .band{font-size:14px;font-weight:800;fill:#5f584e}
+  .num{font-size:11px;font-weight:800;fill:#fff}
+  .t{font-size:14.5px;font-weight:700}
+  .p{font-size:10.5px;fill:#6b6459;font-family:Consolas,monospace}
+  .r{font-size:11px;fill:#4a453d}
+  .lb{font-size:10.5px;fill:#5f584e}
+  .lg{font-size:12.5px;fill:#5f584e}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="title">BEAM-AI 新框架 · 一条消息 / 一段声音的完整旅程</div>
+  <div class="sub">入口 → 鉴权去重 → 情绪内核(L0-L5) → 开口闸门(L3.5) → 生成 → 出口 → 记忆运维　·　实线=主链路　紫虚线=情绪/反馈　红虚线=门控　灰虚线=契约</div>
+  <svg id="d" width="2400" height="1620" viewBox="0 0 2400 1620"></svg>
+</div>
+<script>
+const NS="http://www.w3.org/2000/svg", svg=document.getElementById("d");
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+function txt(a,s){const e=el("text",a);e.textContent=s;return e;}
+function wrap(s,max){const o=[];let c="";for(const ch of s){c+=ch;if(c.length>=max){o.push(c);c="";}}if(c)o.push(c);return o;}
+
+const bands=[
+ {y:40, h:170, t:"① 入口链路", c:"#dbeafe", b:"#5b8def"},
+ {y:230,h:170, t:"② 收消息 · 鉴权 · 去重", c:"#e8e3fb", b:"#8b6fe0"},
+ {y:420,h:210, t:"③ BEAM-AI 情绪内核（六层蛋糕 · 始终在线 · 5s 一拍）", c:"#dcf3e8", b:"#2f9e6e"},
+ {y:650,h:180, t:"④ 开口闸门 L3.5（动机说不等于现在说）", c:"#fdf1d6", b:"#d99a2b"},
+ {y:850,h:170, t:"⑤ 生成", c:"#fde9d9", b:"#d9772b"},
+ {y:1040,h:180, t:"⑥ 出口（文字 / 表情 / 语音）", c:"#fbe4e4", b:"#d15656"},
+ {y:1240,h:200, t:"⑦ 记忆 · 运维 · 契约", c:"#e9edf2", b:"#6b7a8f"}
+];
+
+const cards=[
+ // 入口
+ {id:"a1",b:0,x:60, y:86, w:300,h:104,n:"A1",t:"主人 QQ 消息",p:"private_msg",r:"私聊 / 群聊文字"},
+ {id:"a2",b:0,x:390,y:86, w:300,h:104,n:"A2",t:"语音 / 麦克风",p:"wav",r:"一句人声 → ASR/laya → 情绪"},
+ {id:"a3",b:0,x:720,y:86, w:300,h:104,n:"A3",t:"NapCat · OneBot v11",p:":3000 / :3001",r:"QQ ↔ WebSocket 桥"},
+ {id:"a4",b:0,x:1050,y:86,w:300,h:104,n:"A4",t:"AstrBot 入口",p:":6185",r:"消息事件分发"},
+ // 鉴权去重
+ {id:"b1",b:1,x:60, y:276,w:300,h:104,n:"B1",t:"私聊 / 主人校验",p:"owner 100000000",r:"不是主人不进情绪"},
+ {id:"b2",b:1,x:390,y:276,w:300,h:104,n:"B2",t:"声纹 · CAM++",p:"阈值 0.6",r:"语音场景才走",tag:"门控"},
+ {id:"b3",b:1,x:720,y:276,w:300,h:104,n:"B3",t:"防抖去重",p:"5s 指纹幂等",r:"连发只吃一次 · 语音走声纹"},
+ {id:"b4",b:1,x:1050,y:276,w:300,h:104,n:"B4",t:"消息入库",p:"platform_message_history",r:"973 条真实语料"},
+ // 内核 8 卡
+ {id:"c0",b:2,x:60, y:470,w:270,h:110,n:"C0",t:"beams_state",p:"唯一状态写者",r:"情绪不归零"},
+ {id:"c1",b:2,x:350,y:470,w:270,h:110,n:"C1",t:"L0 身体 / 环境",p:"body.py",r:"算力·显存·延迟·服务健康"},
+ {id:"c2",b:2,x:640,y:470,w:270,h:110,n:"C2",t:"L1 内感受",p:"intero.py",r:"资源/负载/误差 → 连续效价"},
+ {id:"c3",b:2,x:930,y:470,w:270,h:110,n:"C3",t:"L2 双速情绪",p:"affect2.py",r:"快 appraisal + 慢 mood",tag:"核心"},
+ {id:"c4",b:2,x:1220,y:470,w:270,h:110,n:"C4",t:"L3 动机仲裁",p:"drive.py",r:"五动机 → 唯一 winner"},
+ {id:"c5",b:2,x:1510,y:470,w:270,h:110,n:"C5",t:"L4 元认知",p:"meta.py",r:"审核·叙事·自我模型"},
+ {id:"c6",b:2,x:1800,y:470,w:270,h:110,n:"C6",t:"L5 表达门控",p:"express.py",r:"参数 + 注入 + 语音向量"},
+ {id:"c7",b:2,x:2090,y:470,w:250,h:110,n:"C7",t:"双向总线",p:"bus.py",r:"上行状态/下行调参"},
+ // 闸门 7 卡
+ {id:"d1",b:3,x:60, y:700,w:300,h:104,n:"D1",t:"被点名",p:"@ / 引用 / 叫名字",r:"强制开口"},
+ {id:"d2",b:3,x:390,y:700,w:300,h:104,n:"D2",t:"概率门",p:"urgency → 概率",r:"0.05+0.75×紧迫"},
+ {id:"d3",b:3,x:720,y:700,w:300,h:104,n:"D3",t:"频率门",p:"18 次/小时",r:"说太多就闭嘴"},
+ {id:"d4",b:3,x:1050,y:700,w:300,h:104,n:"D4",t:"识趣",p:"忽略衰减 0.82",r:"被冷落就收敛"},
+ {id:"d5",b:3,x:1380,y:700,w:300,h:104,n:"D5",t:"门禁",p:"深夜 ×0.3 / 午睡 ×0.55",r:"作息不能无视"},
+ {id:"d6",b:3,x:1710,y:700,w:300,h:104,n:"D6",t:"未响应队列",p:"pending ≤5",r:"没接的话醒来补"},
+ {id:"d7",b:3,x:2040,y:700,w:300,h:104,n:"D7",t:"LLM 路由",p:"quick / normal / deep",r:"轻话短回 · 重话展开（写进注入）"},
+ // 生成 4 卡
+ {id:"e1",b:4,x:60, y:896,w:330,h:104,n:"E1",t:"<inner> 注入",p:"91 字",r:"只写旧系统没有的"},
+ {id:"e2",b:4,x:420,y:896,w:330,h:104,n:"E2",t:"DeepSeek API",p:"人设+记忆+门控",r:"按 route 调参"},
+ {id:"e3",b:4,x:780,y:896,w:330,h:104,n:"E3",t:"回复文本",p:"生成结果",r:"分句前原文"},
+ {id:"e4",b:4,x:1140,y:896,w:330,h:104,n:"E4",t:"表情包",p:"dafeiyu_meme",r:"22~60% 概率"},
+ // 出口 6 卡
+ {id:"f1",b:5,x:60, y:1086,w:340,h:104,n:"F1",t:"分句 · 反八股",p:"reply_chunker / fishtalk",r:"拆条、去 AI 味"},
+ {id:"f2",b:5,x:430,y:1086,w:340,h:104,n:"F2",t:"feiyu_client",p:"reply_voice()",r:"情绪向量 → 语音"},
+ {id:"f3",b:5,x:800,y:1086,w:340,h:104,n:"F3",t:"IndexTTS",p:"POST :8912/speak",r:"去AI化 · 慢于6s告警",tag:"GPU"},
+ {id:"f4",b:5,x:1170,y:1086,w:340,h:104,n:"F4",t:"语音发送",p:"wav → record",r:"分段流式"},
+ {id:"f5",b:5,x:1540,y:1086,w:340,h:104,n:"F5",t:"QQ 发送",p:"send_private_msg",r:"文字/表情/语音"},
+ {id:"f6",b:5,x:1910,y:1086,w:340,h:104,n:"F6",t:"兜底",p:"不知道 / 失败",r:"降级文字·不硬编"},
+ // 记忆运维 7 卡
+ {id:"g1",b:6,x:60, y:1290,w:300,h:110,n:"G1",t:"记忆插件",p:"whale_memory / memoryflow / iris",r:"长期记忆读写"},
+ {id:"g2",b:6,x:390,y:1290,w:300,h:110,n:"G2",t:"落库",p:"events / memory.jsonl",r:"每拍流水"},
+ {id:"g3",b:6,x:720,y:1290,w:300,h:110,n:"G3",t:"回放测试",p:"973 条聊天记录",r:"校准情绪参数"},
+ {id:"g4",b:6,x:1050,y:1290,w:300,h:110,n:"G4",t:"内核看门狗",p:"health / safe_mode",r:"连败进安全模式 · 收 tts_slow"},
+ {id:"g5",b:6,x:1380,y:1290,w:300,h:110,n:"G5",t:"语音看门狗",p:"120s 巡检",r:"服务失联重启"},
+ {id:"g6",b:6,x:1710,y:1290,w:300,h:110,n:"G6",t:"契约文件",p:"snapshot / outlet_shadow",r:"S3 接管接缝"},
+ {id:"g7",b:6,x:2040,y:1290,w:280,h:110,n:"G7",t:"备份 / 审计",p:"beams_audit.jsonl",r:"调参可追溯"}
+];
+const M={}; cards.forEach(c=>M[c.id]=c);
+const CX=id=>M[id].x+M[id].w/2, CY=id=>M[id].y+M[id].h/2;
+
+const links=[
+ {a:"a1",b:"a3",l:"消息事件",c:"#5b8def"},
+ {a:"a3",b:"a4",l:"WS 推送",c:"#5b8def"},
+ {a:"a2",b:"b2",l:"wav",c:"#8b6fe0"},
+ {a:"a4",b:"b3",l:"事件",c:"#8b6def"},
+ {a:"b1",b:"b3",l:"放行",c:"#8b6fe0"},
+ {a:"b2",b:"b3",l:"声纹通过",c:"#d15656",dash:true},
+ {a:"b3",b:"c3",l:"情绪事件",c:"#2f9e6e",em:true},
+ {a:"c3",b:"c4",l:"情绪→动机",c:"#2f9e6e"},
+ {a:"c4",b:"c5",l:"冲动→审核",c:"#2f9e6e"},
+ {a:"c5",b:"c6",l:"审核→表达",c:"#2f9e6e"},
+ {a:"c0",b:"c7",l:"持久化",c:"#6b7a8f",dash:true},
+ {a:"c4",b:"d2",l:"winner/urgency",c:"#d99a2b",em:true},
+ {a:"d1",b:"d7",l:"",c:"#d99a2b"},
+ {a:"d3",b:"d7",l:"",c:"#d99a2b"},
+ {a:"d5",b:"d7",l:"",c:"#d99a2b"},
+ {a:"d6",b:"d7",l:"",c:"#d99a2b"},
+ {a:"d7",b:"e1",l:"route",c:"#d99a2b",em:true},
+ {a:"e1",b:"e2",l:"注入 91 字",c:"#d9772b"},
+ {a:"e2",b:"e3",l:"生成",c:"#d9772b"},
+ {a:"e3",b:"f1",l:"原文",c:"#d15656",em:true},
+ {a:"e3",b:"e4",l:"",c:"#d9772b"},
+ {a:"e4",b:"f5",l:"",c:"#d99a2b"},
+ {a:"f1",b:"f5",l:"文字",c:"#d15656"},
+ {a:"e3",b:"f2",l:"语音开关",c:"#8b6fe0",dash:true},
+ {a:"c6",b:"f2",l:"8维情绪向量",c:"#8b6fe0",dash:true},
+ {a:"f2",b:"f3",l:"/speak",c:"#d15656"},
+ {a:"f3",b:"f4",l:"wav",c:"#d15656"},
+ {a:"f4",b:"f5",l:"",c:"#d15656"},
+ {a:"f6",b:"f5",l:"降级",c:"#d15656",dash:true},
+ {a:"e2",b:"c5",l:"反馈审核",c:"#8b6fe0",dash:true},
+ {a:"g1",b:"e2",l:"记忆注入",c:"#6b7a8f",dash:true},
+ {a:"g2",b:"c0",l:"落库",c:"#6b7a8f",dash:true},
+ {a:"g4",b:"c2",l:"健康",c:"#d15656",dash:true},
+ // ── 反馈闭环（v2 补）──
+ {a:"g1",b:"c2",l:"记忆反哺",c:"#2f8fef",dash:true},
+ {a:"g1",b:"e3",l:"记忆→Prompt",c:"#2f8fef",dash:true},
+ {a:"e3",b:"g2",l:"写完即存",c:"#2f8fef",dash:true},
+ {a:"g3",b:"c4",l:"清库通知",c:"#2f8fef",dash:true},
+ {a:"c0",b:"e3",l:"身体场",c:"#e08a2b",dash:true},
+ {a:"c4",b:"e3",l:"情绪场→Prompt",c:"#e08a2b",dash:true},
+ {a:"c5",b:"f2",l:"情绪向量→TTS",c:"#e08a2b",dash:true},
+ {a:"d7",b:"f5",l:"简单指令旁路",c:"#2f9e6e",dash:true},
+ {a:"f3",b:"f5",l:"TTS失败→纯文本",c:"#2f9e6e",dash:true},
+ {a:"f5",b:"e3",l:"发送失败→重试",c:"#d13636",em:true},
+ {a:"f3",b:"f1",l:"语音失败→文字",c:"#d13636",em:true},
+ {a:"f5",b:"c5",l:"反馈→审核",c:"#8b4fe0",dash:true},
+ {raw:"M 1710 1086 L 1710 30 L 210 30 L 210 86",c:"#8b4fe0",dash:true,l:"用户反馈大闭环（发出即下一轮输入）",em:false}
+];
+
+const ARROW={"#5b8def":"ar-b","#2f9e6e":"ar-g","#d99a2b":"ar-a","#d9772b":"ar-o","#d15656":"ar-r","#8b6fe0":"ar-p","#6b7a8f":"ar-y",
+"#2f8fef":"ar-m","#e08a2b":"ar-f","#d13636":"ar-e","#8b4fe0":"ar-u"};
+(function(){
+  const defs=el("defs",{});
+  [["ar-b","#5b8def"],["ar-g","#2f9e6e"],["ar-a","#d99a2b"],["ar-o","#d9772b"],["ar-r","#d15656"],["ar-p","#8b6fe0"],["ar-y","#6b7a8f"],
+   ["ar-m","#2f8fef"],["ar-f","#e08a2b"],["ar-e","#d13636"],["ar-u","#8b4fe0"]].forEach(p=>{
+    const m=el("marker",{id:p[0],viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"},defs);
+    el("path",{d:"M 0 0 L 10 5 L 0 10 z",fill:p[1]},m);
+  });
+})();
+
+// 阶段带
+bands.forEach(b=>{
+  el("rect",{x:40,y:b.y,width:2320,height:b.h,rx:14,fill:b.c,opacity:.35,stroke:b.b,"stroke-width":1.1,"stroke-dasharray":"7 5"});
+  txt({x:58,y:b.y+24,class:"band",fill:b.b},b.t);
+});
+
+// 连线（先画）
+links.forEach(l=>{
+  if(l.raw){
+    el("path",{d:l.raw,fill:"none",stroke:l.c,"stroke-width":l.em?2.6:1.9,"stroke-dasharray":"7 6",
+               "marker-end":"url(#"+ARROW[l.c]+")","stroke-linejoin":"round"});
+    if(l.l) txt({x:640,y:24,class:"lb",fill:l.c},l.l);
+    return;
+  }
+  const A=M[l.a],B=M[l.b];
+  let x1=CX(l.a),y1=CY(l.a),x2=CX(l.b),y2=CY(l.b);
+  // 从卡片边缘出发
+  if(Math.abs(x2-x1)>=Math.abs(y2-y1)){ x1= x2>x1? A.x+A.w : A.x; y1=CY(l.a); x2= x2>x1? B.x : B.x+B.w; y2=CY(l.b);}
+  else { x1=CX(l.a); y1= y2>y1? A.y+A.h : A.y; x2=CX(l.b); y2= y2>y1? B.y : B.y+B.h; }
+  const midx=(x1+x2)/2, midy=(y1+y2)/2;
+  const d=`M ${x1} ${y1} L ${midx} ${y1} L ${midx} ${y2} L ${x2} ${y2}`;
+  el("path",{d,fill:"none",stroke:l.c,"stroke-width":l.em?2.3:1.6,"stroke-dasharray":l.dash?"6 5":null,
+             "marker-end":"url(#"+ARROW[l.c]+")","stroke-linejoin":"round",opacity:.95});
+  if(l.l) txt({x:midx+6,y:(y1+y2)/2-6,class:"lb"},l.l);
+});
+
+// 卡片
+cards.forEach(c=>{
+  const col=bands[c.b].b;
+  el("rect",{x:c.x,y:c.y,width:c.w,height:c.h,rx:11,fill:"#ffffff",stroke:col,"stroke-width":1.4});
+  el("rect",{x:c.x,y:c.y,width:c.w,height:6,rx:3,fill:col});
+  el("rect",{x:c.x+10,y:c.y+16,width:42,height:18,rx:9,fill:col});
+  txt({x:c.x+31,y:c.y+29,"text-anchor":"middle",class:"num"},c.n);
+  if(c.tag){ el("rect",{x:c.x+c.w-58,y:c.y+16,width:48,height:18,rx:9,fill:"#fff4d6",stroke:"#d99a2b"});
+    txt({x:c.x+c.w-34,y:c.y+29,"text-anchor":"middle","font-size":"10.5",fill:"#a97500"},c.tag); }
+  txt({x:c.x+14,y:c.y+52,class:"t"},c.t);
+  txt({x:c.x+14,y:c.y+73,class:"p"},c.p);
+  wrap(c.r,Math.floor((c.w-24)/12.5)).forEach((ln,i)=>txt({x:c.x+14,y:c.y+92+i*15,class:"r"},ln));
+});
+
+// 图例
+const ly=1544;
+txt({x:58,y:ly,class:"lg"},"图例（v2 加了反馈）：");
+[["#5b8def","实线 = 主链路"],["#2f8fef","蓝虚线 = 记忆反哺"],["#e08a2b","橙虚线 = 全局情感/环境场"],["#2f9e6e","绿虚线 = 动态旁路"],["#d13636","红粗线 = 失败回退/重试"],["#8b4fe0","紫大虚线 = 用户反馈大闭环"]].forEach((it,i)=>{
+  const x=170+i*330;
+  el("line",{x1:x,y1:ly-4,x2:x+36,y2:ly-4,stroke:it[0],"stroke-width":it[4]==="红粗线"?3:2.2,"stroke-dasharray":i>0?"7 5":null});
+  txt({x:x+44,y:ly,class:"lg"},it[1]);
+});
+txt({x:58,y:ly+32,class:"lg"},"v2 补的五类互相导向：记忆反哺 · 失败回退 · 全局情感场 · 动态旁路 · 用户反馈大闭环（图顶部那条紫线：发出去的消息就是下一轮输入）。");
+txt({x:58,y:ly+54,class:"lg"},"v3 实测已通：route→注入长度 · 记忆 her_reply 落库 · recall 反哺 · TTS 慢速告警 · whale_drive 读 shadow outlet（S3.2 第一刀）。");
+txt({x:58,y:ly+76,class:"lg"},"v4 实测已通：语音双向闭环（voice_now→laya 8类→speech 事件→L2 情绪 0.137→0.017；L5 8维向量→IndexTTS 3.1s 合成）。");
+txt({x:58,y:ly+98,class:"lg"},"v5 实测已通：语音输出发到 QQ（OneBot record OK）· 对称模式（你发语音她才回语音）· 主动消息被 gate 拦截（19:03 日志实锤）。");
+txt({x:58,y:ly+120,class:"lg"},"v6 实测已通：8/9 出口接管（含鲸脑灰度开关）· 新旧情绪差值 0.659（旧系统判「假开心」）· 每日巡检自动记录对比。");
+</script>
+</body>
+</html>

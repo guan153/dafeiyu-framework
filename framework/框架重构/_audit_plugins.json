@@ -1,0 +1,723 @@
+[
+ {
+  "plugin": "astrbot_plugin_angel_eye",
+  "files": 12,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "anchor"
+  ],
+  "tools": [],
+  "hooks": [],
+  "inject_signals": 0
+ },
+ {
+  "plugin": "astrbot_plugin_anima_master",
+  "files": 55,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "anchor"
+  ],
+  "tools": [
+   "comfyui_edit",
+   "comfyui_extract_prompt",
+   "comfyui_generate",
+   "comfyui_remove_bg",
+   "comfyui_reverse_prompt",
+   "comfyui_status"
+  ],
+  "hooks": [
+   "filter.command_group",
+   "filter.event_message_type",
+   "filter.llm_tool"
+  ],
+  "inject_signals": 7
+ },
+ {
+  "plugin": "astrbot_plugin_computer_use",
+  "files": 8,
+  "reads": [
+   "astrbot_plugin_whale_brain/route.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_brain/route.json"
+  ],
+  "shared": [],
+  "tools": [
+   "cu_batch",
+   "cu_browser_eval",
+   "cu_browser_navigate",
+   "cu_browser_shot",
+   "cu_browser_tabs",
+   "cu_browser_text",
+   "cu_click",
+   "cu_click_name",
+   "cu_client_click",
+   "cu_clipboard_get",
+   "cu_clipboard_set",
+   "cu_copy_text",
+   "cu_doctor",
+   "cu_drag",
+   "cu_file_copy",
+   "cu_file_delete",
+   "cu_file_list",
+   "cu_file_mkdir",
+   "cu_file_move",
+   "cu_file_read",
+   "cu_file_write",
+   "cu_find_file",
+   "cu_focus",
+   "cu_hotkey",
+   "cu_live_view",
+   "cu_look",
+   "cu_media",
+   "cu_monitors",
+   "cu_move",
+   "cu_ocr",
+   "cu_open",
+   "cu_open_path",
+   "cu_press",
+   "cu_process_kill",
+   "cu_process_list",
+   "cu_right_click",
+   "cu_screenshot",
+   "cu_scroll",
+   "cu_shell",
+   "cu_software",
+   "cu_status",
+   "cu_sysinfo",
+   "cu_type",
+   "cu_type_name",
+   "cu_ui",
+   "cu_ui_find",
+   "cu_volume",
+   "cu_wechat_click_name",
+   "cu_wechat_list_all",
+   "cu_wechat_open",
+   "cu_wechat_rows",
+   "cu_wechat_scroll",
+   "cu_wechat_send",
+   "cu_window_action",
+   "cu_windows"
+  ],
+  "hooks": [
+   "filter.command",
+   "filter.llm_tool",
+   "filter.on_astrbot_loaded",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 4
+ },
+ {
+  "plugin": "astrbot_plugin_dafeiyu_meme",
+  "files": 1,
+  "reads": [
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_brain/route.json",
+   "astrbot_plugin_whale_state/spectrum.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_brain/route.json",
+   "astrbot_plugin_whale_state/spectrum.json"
+  ],
+  "shared": [
+   "beams_snapshot",
+   "meme"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 3
+ },
+ {
+  "plugin": "astrbot_plugin_dafeiyu_soul",
+  "files": 3,
+  "reads": [
+   "astrbot_plugin_virtual_life/plans.json",
+   "astrbot_plugin_whale_brain/route.json",
+   "astrbot_plugin_whale_drive/wish.json",
+   "astrbot_plugin_whale_state/quiet_until.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/urge.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_virtual_life/plans.json",
+   "astrbot_plugin_whale_brain/route.json",
+   "astrbot_plugin_whale_drive/wish.json",
+   "astrbot_plugin_whale_state/quiet_until.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/urge.json"
+  ],
+  "shared": [
+   "quiet_until",
+   "urge.json",
+   "voice_gate"
+  ],
+  "tools": [
+   "soul_emotion",
+   "soul_play",
+   "soul_post",
+   "soul_remember"
+  ],
+  "hooks": [
+   "filter.command",
+   "filter.llm_tool",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 5
+ },
+ {
+  "plugin": "astrbot_plugin_dere_lover",
+  "files": 1,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "state.json"
+  ],
+  "tools": [
+   "dere_gift",
+   "dere_line",
+   "dere_state"
+  ],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.llm_tool",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 3
+ },
+ {
+  "plugin": "astrbot_plugin_iris_chat_memory",
+  "files": 90,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "anchor",
+   "state.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_agent_done",
+   "filter.on_llm_request",
+   "filter.on_llm_response",
+   "filter.permission_type"
+  ],
+  "inject_signals": 18
+ },
+ {
+  "plugin": "astrbot_plugin_pc_explore",
+  "files": 1,
+  "reads": [
+   "astrbot_plugin_computer_use/software_catalog.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_computer_use/software_catalog.json"
+  ],
+  "shared": [
+   "state.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 2
+ },
+ {
+  "plugin": "astrbot_plugin_proactive_chat",
+  "files": 20,
+  "reads": [
+   "astrbot_plugin_proactive_chat/affect_gate.json",
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_beams/beams_state.json",
+   "astrbot_plugin_whale_beams/outlet_shadow.json",
+   "astrbot_plugin_whale_state/outlet.json",
+   "astrbot_plugin_whale_state/quiet_until.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/state.json",
+   "astrbot_plugin_whale_state/urge.json",
+   "astrbot_plugin_whale_state/urge_consume.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_proactive_chat/affect_gate.json",
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_beams/beams_state.json",
+   "astrbot_plugin_whale_beams/outlet_shadow.json",
+   "astrbot_plugin_whale_state/outlet.json",
+   "astrbot_plugin_whale_state/quiet_until.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/state.json",
+   "astrbot_plugin_whale_state/urge.json",
+   "astrbot_plugin_whale_state/urge_consume.json"
+  ],
+  "shared": [
+   "beams_snapshot",
+   "beams_state",
+   "consequence",
+   "meme",
+   "outlet.json",
+   "outlet_shadow",
+   "quiet_until",
+   "state.json",
+   "urge.json",
+   "voice_gate"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.after_message_sent",
+   "filter.event_message_type",
+   "filter.on_astrbot_loaded"
+  ],
+  "inject_signals": 15
+ },
+ {
+  "plugin": "astrbot_plugin_qq_suite",
+  "files": 2,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [],
+  "tools": [
+   "qq_act",
+   "qq_capabilities",
+   "qq_manual",
+   "qq_prepare",
+   "qq_query"
+  ],
+  "hooks": [
+   "filter.command",
+   "filter.llm_tool",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 7
+ },
+ {
+  "plugin": "astrbot_plugin_reply_chunker",
+  "files": 1,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [],
+  "tools": [],
+  "hooks": [
+   "filter.on_decorating_result"
+  ],
+  "inject_signals": 0
+ },
+ {
+  "plugin": "astrbot_plugin_reply_merge",
+  "files": 2,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [],
+  "tools": [],
+  "hooks": [
+   "filter.event_message_type",
+   "filter.on_decorating_result",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 2
+ },
+ {
+  "plugin": "astrbot_plugin_speech_style",
+  "files": 2,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 3
+ },
+ {
+  "plugin": "astrbot_plugin_virtual_life",
+  "files": 19,
+  "reads": [
+   "astrbot_plugin_whale_brain/route.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_brain/route.json"
+  ],
+  "shared": [
+   "consequence",
+   "sessions.json",
+   "voice_gate"
+  ],
+  "tools": [
+   "add_schedule_requirement",
+   "get_long_term_timeline",
+   "get_virtual_daily_schedule"
+  ],
+  "hooks": [
+   "filter.after_message_sent",
+   "filter.command",
+   "filter.command_group",
+   "filter.event_message_type",
+   "filter.llm_tool",
+   "filter.on_agent_begin",
+   "filter.on_agent_done",
+   "filter.on_llm_request",
+   "filter.on_llm_response",
+   "filter.on_waiting_llm_request",
+   "filter.permission_type"
+  ],
+  "inject_signals": 12
+ },
+ {
+  "plugin": "astrbot_plugin_whale_affect",
+  "files": 16,
+  "reads": [
+   "astrbot_plugin_whale_state/gate.json",
+   "astrbot_plugin_whale_state/mood_events.json"
+  ],
+  "writes_guess": [],
+  "shared": [
+   "anchor",
+   "consequence",
+   "meme",
+   "state.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_astrbot_loaded",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 7
+ },
+ {
+  "plugin": "astrbot_plugin_whale_beams",
+  "files": 1,
+  "reads": [
+   "astrbot_plugin_whale_state/outlet.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_state/outlet.json"
+  ],
+  "shared": [
+   "beams_mind",
+   "beams_snapshot",
+   "beams_state",
+   "outlet.json",
+   "outlet_shadow",
+   "state.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.on_decorating_result",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 5
+ },
+ {
+  "plugin": "astrbot_plugin_whale_bili",
+  "files": 12,
+  "reads": [
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_bili/watch_context.json",
+   "astrbot_plugin_whale_brain/route.json",
+   "astrbot_plugin_whale_drive/scout_urge.json",
+   "astrbot_plugin_whale_memoryflow/shared_log.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/urge.json",
+   "astrbot_plugin_whale_state/urge_consume.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_bili/watch_context.json",
+   "astrbot_plugin_whale_brain/route.json",
+   "astrbot_plugin_whale_drive/scout_urge.json",
+   "astrbot_plugin_whale_memoryflow/shared_log.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/urge.json",
+   "astrbot_plugin_whale_state/urge_consume.json"
+  ],
+  "shared": [
+   "beams_snapshot",
+   "consequence",
+   "main_thread",
+   "quiet_until",
+   "state.json",
+   "urge.json",
+   "voice_gate"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 5
+ },
+ {
+  "plugin": "astrbot_plugin_whale_brain",
+  "files": 4,
+  "reads": [
+   "astrbot_plugin_anima_master/last_task.json",
+   "astrbot_plugin_dere_lover/state.json",
+   "astrbot_plugin_proactive_chat/session_data.json",
+   "astrbot_plugin_speech_style/style_cards.json",
+   "astrbot_plugin_virtual_life/sessions.json",
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_bili/scout_state.json",
+   "astrbot_plugin_whale_bili/watch_state.json",
+   "astrbot_plugin_whale_drive/drives.json",
+   "astrbot_plugin_whale_fsm/state.json",
+   "astrbot_plugin_whale_memoryflow/index.json",
+   "astrbot_plugin_whale_state/mood_events.json",
+   "astrbot_plugin_whale_state/pose.json",
+   "astrbot_plugin_whale_state/quiet_until.json",
+   "astrbot_plugin_whale_state/reflections.json",
+   "astrbot_plugin_whale_state/soul_anchors.json",
+   "astrbot_plugin_whale_state/space_state.json",
+   "astrbot_plugin_whale_state/spectrum.json",
+   "astrbot_plugin_whale_state/state.json",
+   "astrbot_plugin_whale_voice/consequence.json",
+   "astrbot_plugin_whale_voice/voice_gate.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_state/mood_events.json",
+   "astrbot_plugin_whale_state/quiet_until.json",
+   "astrbot_plugin_whale_state/reflections.json",
+   "astrbot_plugin_whale_state/soul_anchors.json",
+   "astrbot_plugin_whale_state/spectrum.json"
+  ],
+  "shared": [
+   "anchor",
+   "beams_snapshot",
+   "consequence",
+   "main_thread",
+   "meme",
+   "pose.json",
+   "quiet_until",
+   "sessions.json",
+   "state.json",
+   "voice_gate"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_decorating_result",
+   "filter.on_llm_request",
+   "filter.on_llm_response",
+   "filter.on_waiting_llm_request"
+  ],
+  "inject_signals": 5
+ },
+ {
+  "plugin": "astrbot_plugin_whale_draw",
+  "files": 2,
+  "reads": [
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_state/state.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_state/state.json"
+  ],
+  "shared": [
+   "beams_snapshot",
+   "image-studio",
+   "state.json"
+  ],
+  "tools": [
+   "whale_draw",
+   "whale_draw_autonomous",
+   "whale_draw_img2img",
+   "whale_draw_models",
+   "whale_draw_status",
+   "whale_selfie"
+  ],
+  "hooks": [
+   "filter.llm_tool"
+  ],
+  "inject_signals": 0
+ },
+ {
+  "plugin": "astrbot_plugin_whale_drive",
+  "files": 2,
+  "reads": [
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_beams/outlet_shadow.json",
+   "astrbot_plugin_whale_state/outlet.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/state.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_beams/outlet_shadow.json",
+   "astrbot_plugin_whale_state/outlet.json",
+   "astrbot_plugin_whale_state/speak_lock.json",
+   "astrbot_plugin_whale_state/state.json"
+  ],
+  "shared": [
+   "outlet.json",
+   "outlet_shadow",
+   "state.json",
+   "urge.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command"
+  ],
+  "inject_signals": 0
+ },
+ {
+  "plugin": "astrbot_plugin_whale_fishtalk",
+  "files": 1,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [],
+  "tools": [],
+  "hooks": [
+   "filter.on_decorating_result",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 4
+ },
+ {
+  "plugin": "astrbot_plugin_whale_fsm",
+  "files": 5,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "state.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_decorating_result",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 4
+ },
+ {
+  "plugin": "astrbot_plugin_whale_memory",
+  "files": 3,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "speaker"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_decorating_result",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 3
+ },
+ {
+  "plugin": "astrbot_plugin_whale_memoryflow",
+  "files": 2,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 5
+ },
+ {
+  "plugin": "astrbot_plugin_whale_state",
+  "files": 5,
+  "reads": [],
+  "writes_guess": [],
+  "shared": [
+   "activity_override",
+   "beams_snapshot",
+   "daily-schedule",
+   "intent.json",
+   "main_thread",
+   "meme",
+   "outlet.json",
+   "pose.json",
+   "state.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_llm_request",
+   "filter.on_llm_response"
+  ],
+  "inject_signals": 4
+ },
+ {
+  "plugin": "astrbot_plugin_whale_urge",
+  "files": 3,
+  "reads": [
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_state/state.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_state/state.json"
+  ],
+  "shared": [
+   "beams_snapshot",
+   "consequence",
+   "main_thread",
+   "quiet_until",
+   "state.json",
+   "urge.json"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command"
+  ],
+  "inject_signals": 0
+ },
+ {
+  "plugin": "astrbot_plugin_whale_voice",
+  "files": 8,
+  "reads": [
+   "astrbot_plugin_dere_lover/state.json",
+   "astrbot_plugin_virtual_life/plans.json",
+   "astrbot_plugin_whale_affect/affect_state.json",
+   "astrbot_plugin_whale_beams/beams_snapshot.json",
+   "astrbot_plugin_whale_fsm/state.json",
+   "astrbot_plugin_whale_state/urge.json"
+  ],
+  "writes_guess": [
+   "astrbot_plugin_dere_lover/state.json",
+   "astrbot_plugin_whale_fsm/state.json",
+   "astrbot_plugin_whale_state/urge.json"
+  ],
+  "shared": [
+   "beams_snapshot",
+   "consequence",
+   "decisions",
+   "reasons.json",
+   "state.json",
+   "urge.json",
+   "voice_gate",
+   "voice_state"
+  ],
+  "tools": [],
+  "hooks": [
+   "filter.command",
+   "filter.event_message_type",
+   "filter.on_astrbot_loaded",
+   "filter.on_llm_request"
+  ],
+  "inject_signals": 6
+ }
+]

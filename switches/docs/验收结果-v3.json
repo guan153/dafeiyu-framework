@@ -1,0 +1,154 @@
+{
+  "generated_at": "2026-11-09T21:30:07",
+  "version": "3.0.0",
+  "passed": 22,
+  "total": 24,
+  "weighted_score": 89.5,
+  "verdict": "PARTIAL",
+  "results": [
+    {
+      "check": "内核已部署",
+      "ok": true,
+      "detail": "%ASTRBOT_HOME%\\data\\whale_core\\__init__.py",
+      "weight": 1
+    },
+    {
+      "check": "内核插件已部署",
+      "ok": true,
+      "detail": "whale_core + whale_introspect",
+      "weight": 1
+    },
+    {
+      "check": "内核版本 v3",
+      "ok": true,
+      "detail": "version=3.0.0",
+      "weight": 1
+    },
+    {
+      "check": "AstrBot WebUI 端口在线",
+      "ok": true,
+      "detail": "127.0.0.1:6185",
+      "weight": 1
+    },
+    {
+      "check": "反向 WS 端口在线",
+      "ok": true,
+      "detail": "127.0.0.1:6199",
+      "weight": 1
+    },
+    {
+      "check": "OneBot HTTP 端口在线",
+      "ok": true,
+      "detail": "127.0.0.1:3000",
+      "weight": 1
+    },
+    {
+      "check": "弱点账本有内容",
+      "ok": true,
+      "detail": "29 条（期望 ≥8 条架构债）",
+      "weight": 2
+    },
+    {
+      "check": "情绪单一事实源在更新",
+      "ok": true,
+      "detail": "source=astrbot_plugin_whale_affect version=1060 距今 4s",
+      "weight": 2
+    },
+    {
+      "check": "情绪写者是 affect",
+      "ok": true,
+      "detail": "source=astrbot_plugin_whale_affect",
+      "weight": 2
+    },
+    {
+      "check": "自省报告有五个维度",
+      "ok": true,
+      "detail": "overall=68.7 dims=5",
+      "weight": 2
+    },
+    {
+      "check": "自省块可注入",
+      "ok": true,
+      "detail": "245 字符",
+      "weight": 1
+    },
+    {
+      "check": "出站闸门有配置",
+      "ok": true,
+      "detail": "daily_cap=40 quiet=[0, 7]",
+      "weight": 2
+    },
+    {
+      "check": "记忆普查可运行",
+      "ok": false,
+      "detail": "OperationalError: unable to open database file",
+      "weight": 2
+    },
+    {
+      "check": "注入观测可用",
+      "ok": true,
+      "detail": "total=33 tags={'affect_state': 1}",
+      "weight": 1
+    },
+    {
+      "check": "联网检索模块可用",
+      "ok": true,
+      "detail": "空查询不联网、空结果有文案",
+      "weight": 1
+    },
+    {
+      "check": "记忆向量索引就绪",
+      "ok": true,
+      "detail": "75 条（{'profile': 15, 'semantic': 60}）",
+      "weight": 2
+    },
+    {
+      "check": "记忆注入走向量/重排模式",
+      "ok": true,
+      "detail": "mode=vector_rerank coarse=0.5 min_score=0.65 limit=2",
+      "weight": 2
+    },
+    {
+      "check": "唱歌资产齐全",
+      "ok": true,
+      "detail": "OK；可唱 ['雨爱（副歌）']",
+      "weight": 2
+    },
+    {
+      "check": "生图兜底已启用",
+      "ok": true,
+      "detail": "decision=fallback:probe plugin_flag=True cap=3",
+      "weight": 2
+    },
+    {
+      "check": "情感模型三件套在线",
+      "ok": false,
+      "detail": "laya=DOWN, qwenemo=OK, audioclass=OK",
+      "weight": 2
+    },
+    {
+      "check": "GPU 能力有可用项（说话或生图）",
+      "ok": true,
+      "detail": "current=draw tts=True draw=True",
+      "weight": 2
+    },
+    {
+      "check": "情绪读者统一走 Hub",
+      "ok": true,
+      "detail": "state_bus=emotion_hub brain=emotion_hub",
+      "weight": 2
+    },
+    {
+      "check": "语音闸门可读",
+      "ok": true,
+      "detail": "dir=%ASTRBOT_HOME%\\data\\plugin_data\\astrbot_plugin_whale_voice code=outlet_deny:proactive",
+      "weight": 1
+    },
+    {
+      "check": "两个新插件无加载失败",
+      "ok": true,
+      "detail": "无失败记录",
+      "weight": 2
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "emotion.snapshot": "shadow",
+  "voice.want_source": "broker",
+  "emotion.shadow_log": "on",
+  "state.refresh_seconds": 60,
+  "proactive.state_stale_guard": "off",
+  "proactive.state_stale_sec": 900,
+  "outlet.stable_ticks": 0,
+  "proactive.outlet_check": "raw",
+  "proactive.outlet_stable_ttl": 120,
+  "proactive.outlet_allow_winner": "connect",
+  "voice.reason_pool_outlet": "off",
+  "proactive.ledger": "off",
+  "proactive.daily_total": 6,
+  "proactive.min_gap_sec": 1800,
+  "proactive.per_source": {
+    "proactive_chat": 3,
+    "will": 2,
+    "bili": 2,
+    "paint": 2
+  },
+  "will.two_strikes_scope": "persist",
+  "emotion.reader.state_bus": "snapshot",
+  "emotion.reader.brain": "snapshot",
+  "emotion.reader.face": "snapshot",
+  "emotion.reader.meme": "snapshot",
+  "emotion.reader.urge": "snapshot",
+  "emotion.reader.bili": "snapshot",
+  "emotion.reader.voice": "snapshot"
+}

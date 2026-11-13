@@ -1,0 +1,584 @@
+{
+  "generated_at": 1794231014.235214,
+  "stats": {
+    "total": 29,
+    "by_status": {
+      "fixing": 1,
+      "open": 5,
+      "proposed": 7,
+      "regressed": 1,
+      "triage": 3,
+      "verified": 11,
+      "wontfix": 1
+    },
+    "by_category": {
+      "bug": 14,
+      "conflict": 8,
+      "doc": 1,
+      "gap": 4,
+      "perf": 2
+    },
+    "by_severity": {
+      "P1": 9,
+      "P2": 10,
+      "P3": 10
+    },
+    "open_count": 17,
+    "open_score": 328.0,
+    "top": [
+      {
+        "key": "system:bug:onebot-通道不可用-消息发不出去",
+        "title": "OneBot 通道不可用，消息发不出去",
+        "category": "bug",
+        "severity": "P1",
+        "plugin": "",
+        "symptom": "[12:49:04.122] [Core] [ERRO] [v4.29.1] [respond.stage:373]: Failed to send the message chain: chain = MessageChain(chain=[Plain(type=<ComponentType.Plain: 'Plain'>, text='【平静】原来是这样。宿舍那边凉快吗？')], use_t2i_=None, use_markdown_=None, type=None), error = ",
+        "root_cause": "",
+        "evidence": {
+          "count": 1,
+          "samples": [
+            "[21:06:06.937] [Core] [WARN] [whale_core.outbound:283]: 出站失败(第1次)，15s 后重试：ApiNotAvailable: "
+          ],
+          "last_ts": 1794229566.937
+        },
+        "status": "proposed",
+        "occurrences": 6,
+        "first_seen": 1794114067.7616584,
+        "last_seen": 1794230742.800874,
+        "source": "logscan",
+        "proposal_id": "613c63d17c3b",
+        "tags": "",
+        "note": "提案 613c63d17c3b: 改进：OneBot 通道不可用，消息发不出去",
+        "score": 51.0
+      },
+      {
+        "key": "system:perf:事件循环卡顿-可能阻塞-astrbot",
+        "title": "事件循环卡顿（可能阻塞 AstrBot）",
+        "category": "perf",
+        "severity": "P1",
+        "plugin": "",
+        "symptom": "[12:36:10.874] [Core] [WARN] [v4.29.1] [utils.event_loop_diagnostics:93]: Event loop lag detected: 17.219s (threshold 15.000s).",
+        "root_cause": "",
+        "evidence": {
+          "count": 1,
+          "samples": [
+            "[19:28:46.460] [Core] [WARN] [v4.29.1] [utils.event_loop_diagnostics:93]: Event loop lag detected: 32.750s (threshold 15.000s)."
+          ],
+          "last_ts": 1794223726.46
+        },
+        "status": "proposed",
+        "occurrences": 18,
+        "first_seen": 1794113167.3944438,
+        "last_seen": 1794225329.7890916,
+        "source": "logscan",
+        "proposal_id": "f00b0f7dc633",
+        "tags": "",
+        "note": "提案 f00b0f7dc633: 改进：事件循环卡顿（可能阻塞 AstrBot）",
+        "score": 51.0
+      },
+      {
+        "key": "astrbot_plugin_whale_brain:bug:prompt-注入时变量未定义-注入被吞",
+        "title": "prompt 注入时变量未定义（注入被吞）",
+        "category": "bug",
+        "severity": "P1",
+        "plugin": "astrbot_plugin_whale_brain",
+        "symptom": "[23:12:28.780] [Core] [WARN] [astrbot_plugin_whale_brain.main:502]: [鲸脑] 注入失败（已忽略，不影响对话）: cannot access local variable 'block' where it is not associated with a value",
+        "root_cause": "",
+        "evidence": {
+          "count": 1,
+          "samples": [
+            "[19:04:42.041] [Core] [WARN] [astrbot_plugin_whale_brain.main:502]: [鲸脑] 注入失败（已忽略，不影响对话）: cannot access local variable 'block' where it is not associated with a value"
+          ],
+          "last_ts": 1794222282.041
+        },
+        "status": "proposed",
+        "occurrences": 22,
+        "first_seen": 1794066044.1229727,
+        "last_seen": 1794223942.0401647,
+        "source": "logscan",
+        "proposal_id": "9912d7f79591",
+        "tags": "",
+        "note": "提案 9912d7f79591: 改进：prompt 注入时变量未定义（注入被吞）",
+        "score": 51.0
+      },
+      {
+        "key": "astrbot_plugin_proactive_chat:bug:主动消息未能送达",
+        "title": "主动消息未能送达",
+        "category": "bug",
+        "severity": "P1",
+        "plugin": "astrbot_plugin_proactive_chat",
+        "symptom": "[13:30:06.696] [astrbot_plugin_proactive_chat] [WARN] [v4.29.1] [core.chat_flow:601]: [主动消息] 私聊 100000000 的本次主动消息未能送达，已跳过存档与计数并重新调度喵。",
+        "root_cause": "",
+        "evidence": {
+          "count": 1,
+          "samples": [
+            "[18:09:23.209] [astrbot_plugin_proactive_chat] [WARN] [v4.29.1] [core.chat_flow:601]: [主动消息] 私聊 100000000 的本次主动消息未能送达，已跳过存档与计数并重新调度喵。"
+          ],
+          "last_ts": 1794218963.209
+        },
+        "status": "proposed",
+        "occurrences": 13,
+        "first_seen": 1794115868.2057292,
+        "last_seen": 1794220202.948347,
+        "source": "logscan",
+        "proposal_id": "581507d78ca9",
+        "tags": "",
+        "note": "提案 581507d78ca9: 改进：主动消息未能送达",
+        "score": 51.0
+      },
+      {
+        "key": "astrbot_plugin_dafeiyu_soul:bug:该配图却没输出-image-标签",
+        "title": "该配图却没输出 image 标签",
+        "category": "bug",
+        "severity": "P2",
+        "plugin": "astrbot_plugin_dafeiyu_soul",
+        "symptom": "[13:00:04.515] [astrbot_plugin_dafeiyu_soul] [WARN] [v4.29.1] [astrbot_plugin_dafeiyu_soul.main:886]: [说说] 配图生成失败（ComfyUI 返回空），本条只发文字",
+        "root_cause": "",
+        "evidence": {
+          "count": 2,
+          "samples": [
+            "[19:42:53.681] [astrbot_plugin_dafeiyu_soul] [WARN] [v4.29.1] [astrbot_plugin_dafeiyu_soul.main:885]: [说说] 本次要带图但 LLM 没给出 image 标签，只发文字",
+            "[19:21:22.822] [astrbot_plugin_dafeiyu_soul] [WARN] [v4.29.1] [astrbot_plugin_dafeiyu_soul.main:883]: [说说] 配图生成失败（ComfyUI 返回空），本条只发文字"
+          ],
+          "last_ts": 1794224573.681
+        },
+        "status": "proposed",
+        "occurrences": 22,
+        "first_seen": 1794114067.7638042,
+        "last_seen": 1794224961.1814437,
+        "source": "logscan",
+        "proposal_id": "f7922d013138",
+        "tags": "",
+        "note": "提案 f7922d013138: 改进：该配图却没输出 image 标签",
+        "score": 20.4
+      },
+      {
+        "key": "astrbot_plugin_iris_chat_memory:bug:faiss-索引与-sqlite-不同步",
+        "title": "FAISS 索引与 SQLite 不同步",
+        "category": "bug",
+        "severity": "P2",
+        "plugin": "astrbot_plugin_iris_chat_memory",
+        "symptom": "[23:23:33.484] [Core] [WARN] [v4.29.1] [l2_memory.adapter:472]: [iris-memory:l2_memory.adapter] FAISS 索引与 SQLite 脱同步（缺 5 条向量、多 0 条脏向量），开始增量修复",
+        "root_cause": "",
+        "evidence": {
+          "count": 4,
+          "samples": [
+            "[19:15:59.603] [Core] [WARN] [v4.29.1] [l2_memory.adapter:472]: [iris-memory:l2_memory.adapter] FAISS 索引与 SQLite 脱同步（缺 2 条向量、多 0 条脏向量），开始增量修复",
+            "[19:15:59.813] [Core] [INFO] [l2_memory.adapter:503]: [iris-memory:l2_memory.adapter] 索引对账修复完成：补回 2 条缺失向量、摘除 0 条脏向量",
+            "[19:15:52.769] [Core] [WARN] [v4.29.1] [l2_memory.adapter:476]: [iris-memory:l2_memory.adapter] FAISS 索引与 SQLite 脱同步（缺 3 条向量、多 0 条脏向量），开始增量修复"
+          ],
+          "last_ts": 1794222959.813
+        },
+        "status": "proposed",
+        "occurrences": 36,
+        "first_seen": 1794066044.1246383,
+        "last_seen": 1794224657.8398836,
+        "source": "logscan",
+        "proposal_id": "28784bd9ee7f",
+        "tags": "",
+        "note": "提案 28784bd9ee7f: 改进：FAISS 索引与 SQLite 不同步",
+        "score": 20.4
+      },
+      {
+        "key": "astrbot_plugin_iris_chat_memory:bug:嵌入批大小超限-补向量失败",
+        "title": "嵌入批大小超限（补向量失败）",
+        "category": "bug",
+        "severity": "P2",
+        "plugin": "astrbot_plugin_iris_chat_memory",
+        "symptom": "[12:34:07.170] [Core] [WARN] [v4.29.1] [l2_memory.adapter:492]: [iris-memory:l2_memory.adapter] 嵌入失败（1/3），2s 后重试：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=55857824-3f87-98bd-942e-9f8ec2bdd68e]",
+        "root_cause": "",
+        "evidence": {
+          "count": 3,
+          "samples": [
+            "[22:14:15.932] [Core] [WARN] [v4.29.1] [l2_memory.adapter:492]: [iris-memory:l2_memory.adapter] 嵌入失败（1/3），2s 后重试：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=e5769581-975f-9b58-b4f8-e9a99c2904bc]",
+            "[22:14:18.355] [Core] [WARN] [v4.29.1] [l2_memory.adapter:492]: [iris-memory:l2_memory.adapter] 嵌入失败（2/3），4s 后重试：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=bae49c9d-7978-9fb0-b9b9-0dbb0a643714]",
+            "[22:14:22.761] [Core] [ERRO] [v4.29.1] [l2_memory.adapter:489]: [iris-memory:l2_memory.adapter] 嵌入调用重试 3 次后仍失败：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=067823cc-9d35-9ee2-b1b6-0df804357733]"
+          ],
+          "last_ts": 1794147262.761
+        },
+        "status": "proposed",
+        "occurrences": 27,
+        "first_seen": 1794113167.398266,
+        "last_seen": 1794148232.4116957,
+        "source": "logscan",
+        "proposal_id": "4e926239c798",
+        "tags": "",
+        "note": "提案 4e926239c798: 改进：嵌入批大小超限（补向量失败）",
+        "score": 20.4
+      },
+      {
+        "key": "astrbot_plugin_whale_affect:conflict:情绪有四份来源-还没收敛成一份",
+        "title": "情绪有四份来源，还没收敛成一份",
+        "category": "conflict",
+        "severity": "P1",
+        "plugin": "astrbot_plugin_whale_affect",
+        "symptom": "模型一轮可能收到 4 个矛盾心情，表现漂移",
+        "root_cause": "affect/beams/state/网关各持有心情快照，无单一写者",
+        "evidence": {},
+        "status": "fixing",
+        "occurrences": 1,
+        "first_seen": 1794040003.7831755,
+        "last_seen": 1794040003.7831755,
+        "source": "architecture",
+        "proposal_id": "b5a3eaae5f9e",
+        "tags": "",
+        "note": "2026-11-07 18:11：state_bus 与 whale_brain.psyche 均改为 EmotionHub 优先（唯一写者=whale_affect），beams_live/affect_state 降级为回退；实测两者 source=emotion_hub、label 与 hub 一致。剩余：旧注入块合并与观察期",
+        "score": 12.0
+      },
+      {
+        "key": "probe:laya.emotion",
+        "title": "服务探针失败：laya.emotion",
+        "category": "bug",
+        "severity": "P3",
+        "plugin": "system",
+        "symptom": "URLError: <urlopen error timed out>",
+        "root_cause": "",
+        "evidence": {
+          "detail": "URLError: <urlopen error timed out>",
+          "latency_ms": 2001.6
+        },
+        "status": "regressed",
+        "occurrences": 15,
+        "first_seen": 1794052640.1035264,
+        "last_seen": 1794230744.8064806,
+        "source": "probe",
+        "proposal_id": "",
+        "tags": "",
+        "note": "探针恢复：HTTP 200 {\"ok\": true, \"device\": \"cpu\", \"classes\": [\"兴奋\", \"吃醋\", \"平静\", \"开心\", \"撒娇\", \"生气\", \"疲惫\", \"难过\"]}",
+        "score": 10.8
+      },
+      {
+        "key": "system:bug:provider-未就绪-启动竞态",
+        "title": "Provider 未就绪（启动竞态）",
+        "category": "bug",
+        "severity": "P3",
+        "plugin": "",
+        "symptom": "[23:17:27.610] [Core] [WARN] [v4.29.1] [star.context:471]: Provider bailian_embedding was not found. Its provider or model ID may have been changed.",
+        "root_cause": "",
+        "evidence": {
+          "count": 8,
+          "samples": [
+            "[21:06:00.043] [Core] [WARN] [v4.29.1] [star.context:471]: Provider bailian_embedding was not found. Its provider or model ID may have been changed.",
+            "[21:06:00.044] [Core] [INFO] [l2_memory.adapter:980]: [iris-memory:l2_memory.adapter] Embedding Provider 未就绪，2s 后重试 (1/5)",
+            "[21:06:03.204] [Core] [WARN] [v4.29.1] [star.context:471]: Provider bailian_embedding was not found. Its provider or model ID may have been changed."
+          ],
+          "last_ts": 1794230557.512
+        },
+        "status": "open",
+        "occurrences": 48,
+        "first_seen": 1794066044.1258523,
+        "last_seen": 1794230742.8013816,
+        "source": "logscan",
+        "proposal_id": "",
+        "tags": "",
+        "note": "",
+        "score": 9.0
+      }
+    ]
+  },
+  "top": [
+    {
+      "key": "system:bug:onebot-通道不可用-消息发不出去",
+      "title": "OneBot 通道不可用，消息发不出去",
+      "category": "bug",
+      "severity": "P1",
+      "plugin": "",
+      "symptom": "[12:49:04.122] [Core] [ERRO] [v4.29.1] [respond.stage:373]: Failed to send the message chain: chain = MessageChain(chain=[Plain(type=<ComponentType.Plain: 'Plain'>, text='【平静】原来是这样。宿舍那边凉快吗？')], use_t2i_=None, use_markdown_=None, type=None), error = ",
+      "root_cause": "",
+      "evidence": {
+        "count": 1,
+        "samples": [
+          "[21:06:06.937] [Core] [WARN] [whale_core.outbound:283]: 出站失败(第1次)，15s 后重试：ApiNotAvailable: "
+        ],
+        "last_ts": 1794229566.937
+      },
+      "status": "proposed",
+      "occurrences": 6,
+      "first_seen": 1794114067.7616584,
+      "last_seen": 1794230742.800874,
+      "source": "logscan",
+      "proposal_id": "613c63d17c3b",
+      "tags": "",
+      "note": "提案 613c63d17c3b: 改进：OneBot 通道不可用，消息发不出去",
+      "score": 51.0
+    },
+    {
+      "key": "system:perf:事件循环卡顿-可能阻塞-astrbot",
+      "title": "事件循环卡顿（可能阻塞 AstrBot）",
+      "category": "perf",
+      "severity": "P1",
+      "plugin": "",
+      "symptom": "[12:36:10.874] [Core] [WARN] [v4.29.1] [utils.event_loop_diagnostics:93]: Event loop lag detected: 17.219s (threshold 15.000s).",
+      "root_cause": "",
+      "evidence": {
+        "count": 1,
+        "samples": [
+          "[19:28:46.460] [Core] [WARN] [v4.29.1] [utils.event_loop_diagnostics:93]: Event loop lag detected: 32.750s (threshold 15.000s)."
+        ],
+        "last_ts": 1794223726.46
+      },
+      "status": "proposed",
+      "occurrences": 18,
+      "first_seen": 1794113167.3944438,
+      "last_seen": 1794225329.7890916,
+      "source": "logscan",
+      "proposal_id": "f00b0f7dc633",
+      "tags": "",
+      "note": "提案 f00b0f7dc633: 改进：事件循环卡顿（可能阻塞 AstrBot）",
+      "score": 51.0
+    },
+    {
+      "key": "astrbot_plugin_whale_brain:bug:prompt-注入时变量未定义-注入被吞",
+      "title": "prompt 注入时变量未定义（注入被吞）",
+      "category": "bug",
+      "severity": "P1",
+      "plugin": "astrbot_plugin_whale_brain",
+      "symptom": "[23:12:28.780] [Core] [WARN] [astrbot_plugin_whale_brain.main:502]: [鲸脑] 注入失败（已忽略，不影响对话）: cannot access local variable 'block' where it is not associated with a value",
+      "root_cause": "",
+      "evidence": {
+        "count": 1,
+        "samples": [
+          "[19:04:42.041] [Core] [WARN] [astrbot_plugin_whale_brain.main:502]: [鲸脑] 注入失败（已忽略，不影响对话）: cannot access local variable 'block' where it is not associated with a value"
+        ],
+        "last_ts": 1794222282.041
+      },
+      "status": "proposed",
+      "occurrences": 22,
+      "first_seen": 1794066044.1229727,
+      "last_seen": 1794223942.0401647,
+      "source": "logscan",
+      "proposal_id": "9912d7f79591",
+      "tags": "",
+      "note": "提案 9912d7f79591: 改进：prompt 注入时变量未定义（注入被吞）",
+      "score": 51.0
+    },
+    {
+      "key": "astrbot_plugin_proactive_chat:bug:主动消息未能送达",
+      "title": "主动消息未能送达",
+      "category": "bug",
+      "severity": "P1",
+      "plugin": "astrbot_plugin_proactive_chat",
+      "symptom": "[13:30:06.696] [astrbot_plugin_proactive_chat] [WARN] [v4.29.1] [core.chat_flow:601]: [主动消息] 私聊 100000000 的本次主动消息未能送达，已跳过存档与计数并重新调度喵。",
+      "root_cause": "",
+      "evidence": {
+        "count": 1,
+        "samples": [
+          "[18:09:23.209] [astrbot_plugin_proactive_chat] [WARN] [v4.29.1] [core.chat_flow:601]: [主动消息] 私聊 100000000 的本次主动消息未能送达，已跳过存档与计数并重新调度喵。"
+        ],
+        "last_ts": 1794218963.209
+      },
+      "status": "proposed",
+      "occurrences": 13,
+      "first_seen": 1794115868.2057292,
+      "last_seen": 1794220202.948347,
+      "source": "logscan",
+      "proposal_id": "581507d78ca9",
+      "tags": "",
+      "note": "提案 581507d78ca9: 改进：主动消息未能送达",
+      "score": 51.0
+    },
+    {
+      "key": "astrbot_plugin_dafeiyu_soul:bug:该配图却没输出-image-标签",
+      "title": "该配图却没输出 image 标签",
+      "category": "bug",
+      "severity": "P2",
+      "plugin": "astrbot_plugin_dafeiyu_soul",
+      "symptom": "[13:00:04.515] [astrbot_plugin_dafeiyu_soul] [WARN] [v4.29.1] [astrbot_plugin_dafeiyu_soul.main:886]: [说说] 配图生成失败（ComfyUI 返回空），本条只发文字",
+      "root_cause": "",
+      "evidence": {
+        "count": 2,
+        "samples": [
+          "[19:42:53.681] [astrbot_plugin_dafeiyu_soul] [WARN] [v4.29.1] [astrbot_plugin_dafeiyu_soul.main:885]: [说说] 本次要带图但 LLM 没给出 image 标签，只发文字",
+          "[19:21:22.822] [astrbot_plugin_dafeiyu_soul] [WARN] [v4.29.1] [astrbot_plugin_dafeiyu_soul.main:883]: [说说] 配图生成失败（ComfyUI 返回空），本条只发文字"
+        ],
+        "last_ts": 1794224573.681
+      },
+      "status": "proposed",
+      "occurrences": 22,
+      "first_seen": 1794114067.7638042,
+      "last_seen": 1794224961.1814437,
+      "source": "logscan",
+      "proposal_id": "f7922d013138",
+      "tags": "",
+      "note": "提案 f7922d013138: 改进：该配图却没输出 image 标签",
+      "score": 20.4
+    },
+    {
+      "key": "astrbot_plugin_iris_chat_memory:bug:faiss-索引与-sqlite-不同步",
+      "title": "FAISS 索引与 SQLite 不同步",
+      "category": "bug",
+      "severity": "P2",
+      "plugin": "astrbot_plugin_iris_chat_memory",
+      "symptom": "[23:23:33.484] [Core] [WARN] [v4.29.1] [l2_memory.adapter:472]: [iris-memory:l2_memory.adapter] FAISS 索引与 SQLite 脱同步（缺 5 条向量、多 0 条脏向量），开始增量修复",
+      "root_cause": "",
+      "evidence": {
+        "count": 4,
+        "samples": [
+          "[19:15:59.603] [Core] [WARN] [v4.29.1] [l2_memory.adapter:472]: [iris-memory:l2_memory.adapter] FAISS 索引与 SQLite 脱同步（缺 2 条向量、多 0 条脏向量），开始增量修复",
+          "[19:15:59.813] [Core] [INFO] [l2_memory.adapter:503]: [iris-memory:l2_memory.adapter] 索引对账修复完成：补回 2 条缺失向量、摘除 0 条脏向量",
+          "[19:15:52.769] [Core] [WARN] [v4.29.1] [l2_memory.adapter:476]: [iris-memory:l2_memory.adapter] FAISS 索引与 SQLite 脱同步（缺 3 条向量、多 0 条脏向量），开始增量修复"
+        ],
+        "last_ts": 1794222959.813
+      },
+      "status": "proposed",
+      "occurrences": 36,
+      "first_seen": 1794066044.1246383,
+      "last_seen": 1794224657.8398836,
+      "source": "logscan",
+      "proposal_id": "28784bd9ee7f",
+      "tags": "",
+      "note": "提案 28784bd9ee7f: 改进：FAISS 索引与 SQLite 不同步",
+      "score": 20.4
+    },
+    {
+      "key": "astrbot_plugin_iris_chat_memory:bug:嵌入批大小超限-补向量失败",
+      "title": "嵌入批大小超限（补向量失败）",
+      "category": "bug",
+      "severity": "P2",
+      "plugin": "astrbot_plugin_iris_chat_memory",
+      "symptom": "[12:34:07.170] [Core] [WARN] [v4.29.1] [l2_memory.adapter:492]: [iris-memory:l2_memory.adapter] 嵌入失败（1/3），2s 后重试：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=55857824-3f87-98bd-942e-9f8ec2bdd68e]",
+      "root_cause": "",
+      "evidence": {
+        "count": 3,
+        "samples": [
+          "[22:14:15.932] [Core] [WARN] [v4.29.1] [l2_memory.adapter:492]: [iris-memory:l2_memory.adapter] 嵌入失败（1/3），2s 后重试：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=e5769581-975f-9b58-b4f8-e9a99c2904bc]",
+          "[22:14:18.355] [Core] [WARN] [v4.29.1] [l2_memory.adapter:492]: [iris-memory:l2_memory.adapter] 嵌入失败（2/3），4s 后重试：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=bae49c9d-7978-9fb0-b9b9-0dbb0a643714]",
+          "[22:14:22.761] [Core] [ERRO] [v4.29.1] [l2_memory.adapter:489]: [iris-memory:l2_memory.adapter] 嵌入调用重试 3 次后仍失败：DashScope Embedding API request failed (HTTP 400): InvalidParameter - <400> InternalError.Algo.InvalidParameter: Value error, batch size is invalid, it should not be larger than 10.: input.contents [url=https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding] [request_id=067823cc-9d35-9ee2-b1b6-0df804357733]"
+        ],
+        "last_ts": 1794147262.761
+      },
+      "status": "proposed",
+      "occurrences": 27,
+      "first_seen": 1794113167.398266,
+      "last_seen": 1794148232.4116957,
+      "source": "logscan",
+      "proposal_id": "4e926239c798",
+      "tags": "",
+      "note": "提案 4e926239c798: 改进：嵌入批大小超限（补向量失败）",
+      "score": 20.4
+    },
+    {
+      "key": "astrbot_plugin_whale_affect:conflict:情绪有四份来源-还没收敛成一份",
+      "title": "情绪有四份来源，还没收敛成一份",
+      "category": "conflict",
+      "severity": "P1",
+      "plugin": "astrbot_plugin_whale_affect",
+      "symptom": "模型一轮可能收到 4 个矛盾心情，表现漂移",
+      "root_cause": "affect/beams/state/网关各持有心情快照，无单一写者",
+      "evidence": {},
+      "status": "fixing",
+      "occurrences": 1,
+      "first_seen": 1794040003.7831755,
+      "last_seen": 1794040003.7831755,
+      "source": "architecture",
+      "proposal_id": "b5a3eaae5f9e",
+      "tags": "",
+      "note": "2026-11-07 18:11：state_bus 与 whale_brain.psyche 均改为 EmotionHub 优先（唯一写者=whale_affect），beams_live/affect_state 降级为回退；实测两者 source=emotion_hub、label 与 hub 一致。剩余：旧注入块合并与观察期",
+      "score": 12.0
+    },
+    {
+      "key": "probe:laya.emotion",
+      "title": "服务探针失败：laya.emotion",
+      "category": "bug",
+      "severity": "P3",
+      "plugin": "system",
+      "symptom": "URLError: <urlopen error timed out>",
+      "root_cause": "",
+      "evidence": {
+        "detail": "URLError: <urlopen error timed out>",
+        "latency_ms": 2001.6
+      },
+      "status": "regressed",
+      "occurrences": 15,
+      "first_seen": 1794052640.1035264,
+      "last_seen": 1794230744.8064806,
+      "source": "probe",
+      "proposal_id": "",
+      "tags": "",
+      "note": "探针恢复：HTTP 200 {\"ok\": true, \"device\": \"cpu\", \"classes\": [\"兴奋\", \"吃醋\", \"平静\", \"开心\", \"撒娇\", \"生气\", \"疲惫\", \"难过\"]}",
+      "score": 10.8
+    },
+    {
+      "key": "system:bug:provider-未就绪-启动竞态",
+      "title": "Provider 未就绪（启动竞态）",
+      "category": "bug",
+      "severity": "P3",
+      "plugin": "",
+      "symptom": "[23:17:27.610] [Core] [WARN] [v4.29.1] [star.context:471]: Provider bailian_embedding was not found. Its provider or model ID may have been changed.",
+      "root_cause": "",
+      "evidence": {
+        "count": 8,
+        "samples": [
+          "[21:06:00.043] [Core] [WARN] [v4.29.1] [star.context:471]: Provider bailian_embedding was not found. Its provider or model ID may have been changed.",
+          "[21:06:00.044] [Core] [INFO] [l2_memory.adapter:980]: [iris-memory:l2_memory.adapter] Embedding Provider 未就绪，2s 后重试 (1/5)",
+          "[21:06:03.204] [Core] [WARN] [v4.29.1] [star.context:471]: Provider bailian_embedding was not found. Its provider or model ID may have been changed."
+        ],
+        "last_ts": 1794230557.512
+      },
+      "status": "open",
+      "occurrences": 48,
+      "first_seen": 1794066044.1258523,
+      "last_seen": 1794230742.8013816,
+      "source": "logscan",
+      "proposal_id": "",
+      "tags": "",
+      "note": "",
+      "score": 9.0
+    },
+    {
+      "key": "inject:over_budget",
+      "title": "单轮注入超预算",
+      "category": "perf",
+      "severity": "P2",
+      "plugin": "",
+      "symptom": "单轮注入 5974 字 > 上限 3000",
+      "root_cause": "多个插件各自追加注入，没有全局预算",
+      "evidence": {
+        "tags": {
+          "dynamic_context": 1,
+          "meme_capability": 1,
+          "character_state": 1,
+          "screen_now": 1,
+          "psyche": 1,
+          "fishtalk_style": 1,
+          "self_awareness": 1,
+          "memory_index": 1,
+          "whale_state": 1,
+          "energy": 1,
+          "mood_tag": 1,
+          "avoid": 1,
+          "voice_state": 1
+        },
+        "parts": 14
+      },
+      "status": "open",
+      "occurrences": 1,
+      "first_seen": 1794046161.4010112,
+      "last_seen": 1794046161.4010112,
+      "source": "injectwatch",
+      "proposal_id": "",
+      "tags": "",
+      "note": "",
+      "score": 8.0
+    },
+    {
+      "key": "system:conflict:回复后处理多层改写与切条-最终内容不可预测",
+      "title": "回复后处理多层改写与切条，最终内容不可预测",
+      "category": "conflict",
+      "severity": "P2",
+      "plugin": "",
+      "symptom": "同样输入不同形状，偶尔吞句",
+      "root_cause": "chunker/speech_style/brain/fishtalk/fsm 依次改写",
+      "evidence": {},
+      "status": "triage",
+      "occurrences": 1,
+      "first_seen": 1794040003.7841806,
+      "last_seen": 1794040003.7841806,
+      "source": "architecture",
+      "proposal_id": "",
+      "tags": "",
+      "note": "架构级设计债，已知未解",
+      "score": 8.0
+    }
+  ]
+}
